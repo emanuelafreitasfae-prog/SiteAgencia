@@ -353,13 +353,17 @@ const ProjectsPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Orçamento (opcional)</label>
+                <label className="block text-sm font-medium mb-2">Orçamento Proposto *</label>
                 <Input 
                   value={newProject.budget}
                   onChange={(e) => setNewProject({...newProject, budget: e.target.value})}
                   placeholder="Ex: 5000€"
+                  required
                   data-testid="project-budget-input"
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  O orçamento será analisado pelo administrador
+                </p>
               </div>
               <Button type="submit" className="w-full bg-primary" data-testid="create-project-btn">
                 Criar Projeto
