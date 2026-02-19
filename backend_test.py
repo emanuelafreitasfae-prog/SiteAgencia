@@ -56,9 +56,22 @@ class AndreDev_APITester:
                 response = requests.delete(url, headers=test_headers, timeout=10)
 
             success = response.status_code == expected_status
-            self.log_test(name, success, response.status_code, expected_status)
+            
+            # For debugging, print error response
+            if not success and response.content:
+                try:
+                    error_response = response.json()
+                    error_msg = f"API Error: {error_response}"
+                    print(f"   Response body: {error_response}")
+                except:
+                    error_msg = f"HTTP {response.status_code}"
+                    print(f"   Response text: {response.text}")
+            else:
+                error_msg = None
+                
+            self.log_test(name, success, response.status_code, expected_status, error_msg)
 
-            return success, response.json() if success and response.content else {}
+            return success, response.json() if response.content else {}
 
         except requests.exceptions.Timeout:
             error_msg = "Request timeout"
