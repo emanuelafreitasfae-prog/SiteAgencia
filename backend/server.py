@@ -175,6 +175,11 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         raise HTTPException(status_code=401, detail="Utilizador não encontrado")
     return user
 
+async def get_admin_user(current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Acesso restrito a administradores")
+    return current_user
+
 
 # ==================== AUTH ROUTES ====================
 
@@ -193,6 +198,7 @@ async def register(user_data: UserRegister):
         "email": user_data.email,
         "password": hash_password(user_data.password),
         "company": user_data.company,
+        "role": "client",
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
