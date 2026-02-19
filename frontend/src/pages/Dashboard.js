@@ -470,13 +470,13 @@ const MessagesPage = () => {
 
   return (
     <div data-testid="messages-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Mensagens</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Mensagens</h1>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         {/* New Message Form */}
-        <div className="bg-white border border-border p-6 rounded-xl shadow-sm">
-          <h2 className="text-lg font-semibold text-primary mb-4">Nova Mensagem</h2>
-          <form onSubmit={handleSendMessage} className="space-y-4">
+        <div className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm">
+          <h2 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Nova Mensagem</h2>
+          <form onSubmit={handleSendMessage} className="space-y-3 sm:space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">Assunto</label>
               <Input 
@@ -493,8 +493,9 @@ const MessagesPage = () => {
                 value={newMessage.content}
                 onChange={(e) => setNewMessage({...newMessage, content: e.target.value})}
                 placeholder="Escreva a sua mensagem..."
-                rows={5}
+                rows={4}
                 required
+                className="min-h-[100px] sm:min-h-[120px]"
                 data-testid="message-content-input"
               />
             </div>
@@ -511,31 +512,31 @@ const MessagesPage = () => {
         </div>
 
         {/* Messages List */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-primary">Histórico</h2>
+        <div className="space-y-3 sm:space-y-4">
+          <h2 className="text-base sm:text-lg font-semibold text-primary">Histórico</h2>
           {messages.length === 0 ? (
-            <div className="bg-white border border-border rounded-xl p-8 text-center">
-              <MessageSquare className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">Sem mensagens</p>
+            <div className="bg-white border border-border rounded-xl p-6 sm:p-8 text-center">
+              <MessageSquare className="w-8 h-8 sm:w-10 sm:h-10 text-muted-foreground mx-auto mb-2 sm:mb-3" />
+              <p className="text-sm sm:text-base text-muted-foreground">Sem mensagens</p>
             </div>
           ) : (
             messages.map((message) => (
               <div 
                 key={message.id}
-                className="bg-white border border-border p-4 rounded-xl shadow-sm"
+                className="bg-white border border-border p-3 sm:p-4 rounded-xl shadow-sm"
                 data-testid={`message-${message.id}`}
               >
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <h3 className="font-medium text-primary">{message.subject}</h3>
+                <div className="flex items-start justify-between gap-2 sm:gap-4 mb-2">
+                  <h3 className="font-medium text-primary text-sm sm:text-base">{message.subject}</h3>
                   <span className="text-xs text-muted-foreground whitespace-nowrap">
                     {new Date(message.created_at).toLocaleDateString('pt-PT')}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground">{message.content}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{message.content}</p>
                 {message.admin_reply && (
-                  <div className="mt-3 pt-3 border-t border-border">
+                  <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-border">
                     <p className="text-xs text-secondary font-medium mb-1">Resposta:</p>
-                    <p className="text-sm text-foreground">{message.admin_reply}</p>
+                    <p className="text-xs sm:text-sm text-foreground">{message.admin_reply}</p>
                   </div>
                 )}
               </div>
