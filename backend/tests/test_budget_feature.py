@@ -21,8 +21,8 @@ API = f"{BASE_URL}/api"
 
 # Test data with unique identifiers
 TEST_ID = str(uuid.uuid4())[:8]
-TEST_ADMIN_EMAIL = f"testadmin_{TEST_ID}@test.com"
-TEST_ADMIN_PASSWORD = "testadmin123"
+TEST_ADMIN_EMAIL = "admin@andredev.pt"  # Use existing admin
+TEST_ADMIN_PASSWORD = "admin123"
 TEST_CLIENT_EMAIL = f"testclient_{TEST_ID}@test.com"
 TEST_CLIENT_PASSWORD = "testclient123"
 
