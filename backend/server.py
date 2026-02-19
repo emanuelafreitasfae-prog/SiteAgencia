@@ -632,6 +632,38 @@ async def update_project_status(
     
     return {"message": "Estado atualizado"}
 
+@api_router.put("/admin/projects/{project_id}/budget-response")
+async def respond_to_budget(
+    project_id: str,
+    budget_response: BudgetResponse,
+    admin: dict = Depends(get_admin_user)
+):
+    """Admin responds to project budget - accept or counter-proposal"""
+    if budget_response.budget_status not in ["accepted", "counter_proposal"]:
+        raise HTTPException(status_code=400, detail="Estado de orçamento inválido")
+    
+    update_data = {
+        "budget_status": budget_response.budget_status,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    if budget_response.budget_status == "counter_proposal":
+        if not budget_response.counter_proposal:
+            raise HTTPException(status_code=400, detail="Contraproposta é obrigatória")
+        update_data["counter_proposal"] = budget_response.counter_proposal
+    
+    if budget_response.admin_notes:
+        update_data["admin_notes"] = budget_response.admin_notes
+    
+    result = await db.projects.update_one(
+        {"id": project_id},
+        {"$set": update_data}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+    
+    return {"message": "Resposta ao orçamento enviada"}
+
 @api_router.get("/admin/messages")
 async def get_all_messages(admin: dict = Depends(get_admin_user)):
     """Get all messages from all users"""
