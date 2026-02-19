@@ -141,6 +141,50 @@ class PortfolioItem(BaseModel):
     technologies: List[str]
     link: Optional[str] = None
 
+# ==================== CMS MODELS ====================
+
+class HeroContent(BaseModel):
+    tagline: str = "Agência de Desenvolvimento"
+    title: str = "Criamos o seu"
+    highlight: str = "futuro digital"
+    description: str = "Desenvolvemos websites e aplicações móveis que transformam ideias em experiências digitais extraordinárias. Android, iOS e Web."
+    cta_text: str = "Começar Projeto"
+    stats: List[dict] = []
+
+class ServiceItem(BaseModel):
+    id: Optional[str] = None
+    icon: str = "Monitor"
+    title: str
+    description: str
+    features: List[str]
+
+class PortfolioItemCreate(BaseModel):
+    title: str
+    description: str
+    image_url: str
+    category: str
+    technologies: List[str]
+    link: Optional[str] = None
+
+class TestimonialItem(BaseModel):
+    id: Optional[str] = None
+    name: str
+    role: str
+    image: str
+    text: str
+
+class ContactInfo(BaseModel):
+    email: str = "contacto@andredev.pt"
+    phone: str = "+351 912 345 678"
+    location: str = "Lisboa, Portugal"
+
+class SiteContent(BaseModel):
+    hero: Optional[HeroContent] = None
+    services: Optional[List[ServiceItem]] = None
+    portfolio: Optional[List[PortfolioItemCreate]] = None
+    testimonials: Optional[List[TestimonialItem]] = None
+    contact_info: Optional[ContactInfo] = None
+
 
 # ==================== HELPERS ====================
 
