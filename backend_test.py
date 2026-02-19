@@ -114,7 +114,7 @@ class AndreDev_APITester:
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         test_user_data = {
             "name": f"Test User {timestamp}",
-            "email": f"test_{timestamp}@andredev.test",
+            "email": f"test_{timestamp}@example.com",
             "password": "TestPass123!",
             "company": "Test Company"
         }
@@ -144,7 +144,7 @@ class AndreDev_APITester:
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S') + "_login"
         register_data = {
             "name": f"Login Test User {timestamp}",
-            "email": f"login_test_{timestamp}@andredev.test", 
+            "email": f"login_test_{timestamp}@example.com", 
             "password": "LoginPass123!",
             "company": "Login Test Company"
         }
