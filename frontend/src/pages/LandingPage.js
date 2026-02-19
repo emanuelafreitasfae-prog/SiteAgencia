@@ -234,33 +234,8 @@ const ServicesSection = ({ content }) => {
 };
 
 // Portfolio Section
-const PortfolioSection = () => {
-  const projects = [
-    {
-      title: "E-Commerce Platform",
-      category: "Web",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
-      tech: ["React", "Node.js", "MongoDB"]
-    },
-    {
-      title: "App de Fitness",
-      category: "Mobile",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600",
-      tech: ["React Native", "Firebase"]
-    },
-    {
-      title: "Sistema de Gestão",
-      category: "Web",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
-      tech: ["Vue.js", "Python"]
-    },
-    {
-      title: "App de Delivery",
-      category: "Mobile",
-      image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600",
-      tech: ["Flutter", "Node.js"]
-    }
-  ];
+const PortfolioSection = ({ content }) => {
+  const projects = content?.portfolio || [];
 
   return (
     <section id="portfolio" className="py-12 sm:py-16 md:py-24">
@@ -283,7 +258,7 @@ const PortfolioSection = () => {
             >
               <div className="aspect-video overflow-hidden">
                 <img 
-                  src={project.image}
+                  src={project.image_url}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -291,8 +266,9 @@ const PortfolioSection = () => {
               <div className="p-4 sm:p-6">
                 <span className="text-xs sm:text-sm text-secondary font-medium">{project.category}</span>
                 <h3 className="text-lg sm:text-xl font-medium text-primary mt-1 sm:mt-2">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3 sm:mt-4">
-                  {project.tech.map((t, i) => (
+                  {project.technologies?.map((t, i) => (
                     <span key={i} className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
                       {t}
                     </span>
@@ -308,16 +284,8 @@ const PortfolioSection = () => {
 };
 
 // Testimonials Section
-const TestimonialsSection = () => {
-  const testimonials = [
-    {
-      name: "Maria Santos",
-      role: "CEO, TechStart",
-      image: "https://images.unsplash.com/photo-1758518727888-ffa196002e59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
-      text: "A Andre Dev transformou completamente a nossa presença digital. O website que desenvolveram superou todas as expectativas."
-    },
-    {
-      name: "João Ferreira",
+const TestimonialsSection = ({ content }) => {
+  const testimonials = content?.testimonials || [];
       role: "Fundador, AppSolutions",
       image: "https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
       text: "Profissionalismo e qualidade excecional. A app que criaram para nós tem recebido feedback incrível dos utilizadores."
