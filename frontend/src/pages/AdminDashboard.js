@@ -34,8 +34,10 @@ import {
   CheckCircle2,
   AlertCircle,
   Trash2,
-  Send
+  Send,
+  FileEdit
 } from 'lucide-react';
+import ContentEditor from './ContentEditor';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -54,6 +56,7 @@ const AdminSidebar = ({ open, setOpen }) => {
 
   const navItems = [
     { path: '/admin', icon: LayoutDashboard, label: 'Dashboard', exact: true },
+    { path: '/admin/content', icon: FileEdit, label: 'Editar Site' },
     { path: '/admin/contacts', icon: Mail, label: 'Contactos' },
     { path: '/admin/users', icon: Users, label: 'Utilizadores' },
     { path: '/admin/projects', icon: FolderKanban, label: 'Projetos' },
