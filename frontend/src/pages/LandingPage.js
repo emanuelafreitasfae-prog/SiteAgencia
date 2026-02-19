@@ -204,32 +204,32 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section id="servicos" className="py-24 bg-muted/50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+    <section id="servicos" className="py-12 sm:py-16 md:py-24 bg-muted/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <p className="text-xs sm:text-sm font-medium tracking-wider uppercase text-secondary mb-2 sm:mb-4">
             Os Nossos Serviços
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-primary">
             O que fazemos de melhor
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="bg-white border border-border p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:shadow-md group"
+              className="bg-white border border-border p-5 sm:p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:shadow-md group"
               data-testid={`service-card-${index}`}
             >
-              <div className="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
-                <service.icon className="w-7 h-7 text-secondary" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-secondary/20 transition-colors">
+                <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-secondary" />
               </div>
-              <h3 className="text-2xl font-medium text-primary mb-3">{service.title}</h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+              <h3 className="text-xl sm:text-2xl font-medium text-primary mb-2 sm:mb-3">{service.title}</h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">{service.description}</p>
               <div className="flex flex-wrap gap-2">
                 {service.features.map((feature, i) => (
-                  <span key={i} className="text-sm bg-muted px-3 py-1 rounded-full text-muted-foreground">
+                  <span key={i} className="text-xs sm:text-sm bg-muted px-2 sm:px-3 py-1 rounded-full text-muted-foreground">
                     {feature}
                   </span>
                 ))}
