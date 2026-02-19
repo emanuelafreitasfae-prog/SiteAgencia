@@ -754,6 +754,7 @@ export default function AdminDashboard() {
         <div className="p-4 sm:p-6 lg:p-12">
           <Routes>
             <Route index element={<AdminOverview />} />
+            <Route path="content" element={<ContentEditor />} />
             <Route path="contacts" element={<AdminContacts />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="projects" element={<AdminProjects />} />
