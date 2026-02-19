@@ -182,37 +182,37 @@ const DashboardOverview = () => {
 
   return (
     <div data-testid="dashboard-overview">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Dashboard</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Dashboard</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
         {statCards.map((stat, index) => (
           <div 
             key={index}
-            className="bg-white border border-border p-6 rounded-xl shadow-sm"
+            className="bg-white border border-border p-3 sm:p-4 md:p-6 rounded-xl shadow-sm"
             data-testid={`stat-card-${index}`}
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
-                <stat.icon className="w-6 h-6 text-white" />
+            <div className="flex items-center justify-between mb-2 sm:mb-4">
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
+                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-primary">{stat.value}</p>
-            <p className="text-muted-foreground text-sm">{stat.label}</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">{stat.value}</p>
+            <p className="text-muted-foreground text-xs sm:text-sm truncate">{stat.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white border border-border p-6 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold text-primary mb-4">Ações Rápidas</h2>
-        <div className="flex flex-wrap gap-4">
-          <Link to="/dashboard/projects">
-            <Button className="bg-secondary hover:bg-secondary/90">
+      <div className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm">
+        <h2 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Ações Rápidas</h2>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <Link to="/dashboard/projects" className="w-full sm:w-auto">
+            <Button className="bg-secondary hover:bg-secondary/90 w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-2" />
               Novo Projeto
             </Button>
           </Link>
-          <Link to="/dashboard/messages">
-            <Button variant="outline">
+          <Link to="/dashboard/messages" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto">
               <MessageSquare className="w-4 h-4 mr-2" />
               Enviar Mensagem
             </Button>
