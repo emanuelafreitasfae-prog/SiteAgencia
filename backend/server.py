@@ -212,6 +212,7 @@ async def register(user_data: UserRegister):
         name=user_data.name,
         email=user_data.email,
         company=user_data.company,
+        role="client",
         created_at=user_doc["created_at"]
     )
     
@@ -233,6 +234,7 @@ async def login(credentials: UserLogin):
         name=user["name"],
         email=user["email"],
         company=user.get("company"),
+        role=user.get("role", "client"),
         created_at=user["created_at"]
     )
     
@@ -245,6 +247,7 @@ async def get_me(current_user: dict = Depends(get_current_user)):
         name=current_user["name"],
         email=current_user["email"],
         company=current_user.get("company"),
+        role=current_user.get("role", "client"),
         created_at=current_user["created_at"]
     )
 
