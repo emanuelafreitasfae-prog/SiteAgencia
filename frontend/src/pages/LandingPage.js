@@ -286,11 +286,6 @@ const PortfolioSection = ({ content }) => {
 // Testimonials Section
 const TestimonialsSection = ({ content }) => {
   const testimonials = content?.testimonials || [];
-      role: "Fundador, AppSolutions",
-      image: "https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
-      text: "Profissionalismo e qualidade excecional. A app que criaram para nós tem recebido feedback incrível dos utilizadores."
-    }
-  ];
 
   return (
     <section id="testemunhos" className="py-12 sm:py-16 md:py-24 bg-primary">
@@ -339,7 +334,8 @@ const TestimonialsSection = ({ content }) => {
 };
 
 // Contact Section
-const ContactSection = () => {
+const ContactSection = ({ content }) => {
+  const contactInfo = content?.contact_info || {};
   const [formData, setFormData] = useState({
     name: '',
     email: '',
