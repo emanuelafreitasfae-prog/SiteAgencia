@@ -189,32 +189,32 @@ const AdminOverview = () => {
 
   return (
     <div data-testid="admin-dashboard">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Painel de Administração</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Painel de Administração</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
         {statCards.map((stat, index) => (
           <div 
             key={index}
-            className="bg-white border border-border p-6 rounded-xl shadow-sm"
+            className="bg-white border border-border p-3 sm:p-4 md:p-6 rounded-xl shadow-sm"
             data-testid={`admin-stat-${index}`}
           >
-            <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center mb-4`}>
-              <stat.icon className="w-6 h-6 text-white" />
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${stat.color} rounded-lg flex items-center justify-center mb-2 sm:mb-4`}>
+              <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
             </div>
-            <p className="text-3xl font-bold text-primary">{stat.value}</p>
-            <p className="text-muted-foreground text-sm">{stat.label}</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">{stat.value}</p>
+            <p className="text-muted-foreground text-xs sm:text-sm truncate">{stat.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white border border-border p-6 rounded-xl shadow-sm">
-        <h2 className="text-lg font-semibold text-primary mb-4">Estado dos Projetos</h2>
-        <div className="grid grid-cols-3 gap-4">
+      <div className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm">
+        <h2 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Estado dos Projetos</h2>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {projectStats.map((stat, index) => (
-            <div key={index} className="text-center p-4 bg-muted rounded-lg">
-              <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
-              <p className="text-2xl font-bold text-primary">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <div key={index} className="text-center p-2 sm:p-4 bg-muted rounded-lg">
+              <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
+              <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary">{stat.value}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
         </div>
