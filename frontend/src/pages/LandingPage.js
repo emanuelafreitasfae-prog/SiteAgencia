@@ -406,53 +406,53 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contacto" className="py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+    <section id="contacto" className="py-12 sm:py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24">
           <div>
-            <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+            <p className="text-xs sm:text-sm font-medium tracking-wider uppercase text-secondary mb-2 sm:mb-4">
               Contacto
             </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-primary mb-4 sm:mb-6">
               Vamos criar algo incrível juntos
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
               Tem um projeto em mente? Entre em contacto connosco e vamos discutir como podemos ajudar a transformar a sua ideia em realidade.
             </p>
 
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-secondary" />
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-primary">contacto@andredev.pt</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Telefone</p>
-                  <p className="font-medium text-primary">+351 912 345 678</p>
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium text-primary text-sm sm:text-base truncate">contacto@andredev.pt</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-secondary" />
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Localização</p>
-                  <p className="font-medium text-primary">Lisboa, Portugal</p>
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Telefone</p>
+                  <p className="font-medium text-primary text-sm sm:text-base">+351 912 345 678</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Localização</p>
+                  <p className="font-medium text-primary text-sm sm:text-base">Lisboa, Portugal</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-border p-8 rounded-2xl shadow-sm">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-white border border-border p-5 sm:p-8 rounded-2xl shadow-sm">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div>
                 <label className="block text-sm font-medium text-primary mb-2">Nome</label>
                 <Input 
