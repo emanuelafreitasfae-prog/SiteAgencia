@@ -79,7 +79,7 @@ class ProjectCreate(BaseModel):
     description: str
     project_type: str  # web, android, ios, hybrid
     status: str = "pending"  # pending, in_progress, completed
-    budget: Optional[str] = None
+    budget: str  # Now required
 
 class ProjectResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -89,7 +89,10 @@ class ProjectResponse(BaseModel):
     description: str
     project_type: str
     status: str
-    budget: Optional[str] = None
+    budget: str
+    budget_status: str = "pending"  # pending, accepted, counter_proposal
+    counter_proposal: Optional[str] = None
+    admin_notes: Optional[str] = None
     created_at: str
     updated_at: str
 
@@ -99,6 +102,11 @@ class ProjectUpdate(BaseModel):
     project_type: Optional[str] = None
     status: Optional[str] = None
     budget: Optional[str] = None
+
+class BudgetResponse(BaseModel):
+    budget_status: str  # accepted, counter_proposal
+    counter_proposal: Optional[str] = None
+    admin_notes: Optional[str] = None
 
 class MessageCreate(BaseModel):
     subject: str
