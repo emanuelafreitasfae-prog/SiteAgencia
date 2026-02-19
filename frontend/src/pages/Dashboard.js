@@ -277,6 +277,15 @@ const ProjectsPage = () => {
     return badges[status] || badges.pending;
   };
 
+  const getBudgetStatusBadge = (budgetStatus) => {
+    const badges = {
+      pending: { label: 'Orçamento Pendente', class: 'bg-orange-100 text-orange-700' },
+      accepted: { label: 'Orçamento Aceite', class: 'bg-green-100 text-green-700' },
+      counter_proposal: { label: 'Contraproposta', class: 'bg-purple-100 text-purple-700' }
+    };
+    return badges[budgetStatus] || badges.pending;
+  };
+
   const getTypeBadge = (type) => {
     const types = {
       web: 'Website',
