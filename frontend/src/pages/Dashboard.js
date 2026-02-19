@@ -33,7 +33,8 @@ import {
   AlertCircle,
   Menu,
   X,
-  Send
+  Send,
+  Euro
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
