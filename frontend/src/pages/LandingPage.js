@@ -272,18 +272,18 @@ const PortfolioSection = () => {
   ];
 
   return (
-    <section id="portfolio" className="py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+    <section id="portfolio" className="py-12 sm:py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <p className="text-xs sm:text-sm font-medium tracking-wider uppercase text-secondary mb-2 sm:mb-4">
             Portfolio
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-primary">
             Projetos em Destaque
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {projects.map((project, index) => (
             <div 
               key={index}
@@ -297,10 +297,10 @@ const PortfolioSection = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-6">
-                <span className="text-sm text-secondary font-medium">{project.category}</span>
-                <h3 className="text-xl font-medium text-primary mt-2">{project.title}</h3>
-                <div className="flex flex-wrap gap-2 mt-4">
+              <div className="p-4 sm:p-6">
+                <span className="text-xs sm:text-sm text-secondary font-medium">{project.category}</span>
+                <h3 className="text-lg sm:text-xl font-medium text-primary mt-1 sm:mt-2">{project.title}</h3>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3 sm:mt-4">
                   {project.tech.map((t, i) => (
                     <span key={i} className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
                       {t}
@@ -334,41 +334,41 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <section id="testemunhos" className="py-24 bg-primary">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+    <section id="testemunhos" className="py-12 sm:py-16 md:py-24 bg-primary">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <p className="text-xs sm:text-sm font-medium tracking-wider uppercase text-secondary mb-2 sm:mb-4">
             Testemunhos
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white">
             O que dizem os nossos clientes
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10"
+              className="bg-white/10 backdrop-blur-sm p-5 sm:p-8 rounded-2xl border border-white/10"
               data-testid={`testimonial-${index}`}
             >
-              <div className="flex gap-1 mb-6">
+              <div className="flex gap-1 mb-4 sm:mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-secondary text-secondary" />
+                  <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-secondary text-secondary" />
                 ))}
               </div>
-              <p className="text-white/90 text-lg leading-relaxed mb-6">
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
                 "{testimonial.text}"
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <img 
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-semibold text-white">{testimonial.name}</p>
-                  <p className="text-white/60 text-sm">{testimonial.role}</p>
+                  <p className="font-semibold text-white text-sm sm:text-base">{testimonial.name}</p>
+                  <p className="text-white/60 text-xs sm:text-sm">{testimonial.role}</p>
                 </div>
               </div>
             </div>
