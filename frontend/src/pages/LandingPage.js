@@ -1,0 +1,552 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { 
+  Monitor, 
+  Smartphone, 
+  Code2, 
+  Rocket, 
+  CheckCircle2, 
+  ArrowRight,
+  Menu,
+  X,
+  Star,
+  Mail,
+  Phone,
+  MapPin
+} from 'lucide-react';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
+
+// Header Component
+const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          <Link to="/" className="flex items-center gap-2" data-testid="logo-link">
+            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <Code2 className="w-6 h-6 text-white" />
+            </div>
+            <span className="font-sans font-bold text-xl text-primary">Andre Dev</span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-8">
+            <a href="#servicos" className="text-foreground/80 hover:text-primary transition-colors font-medium" data-testid="nav-services">Serviços</a>
+            <a href="#portfolio" className="text-foreground/80 hover:text-primary transition-colors font-medium" data-testid="nav-portfolio">Portfolio</a>
+            <a href="#testemunhos" className="text-foreground/80 hover:text-primary transition-colors font-medium" data-testid="nav-testimonials">Testemunhos</a>
+            <a href="#contacto" className="text-foreground/80 hover:text-primary transition-colors font-medium" data-testid="nav-contact">Contacto</a>
+          </nav>
+
+          <div className="hidden lg:flex items-center gap-4">
+            <Link to="/login">
+              <Button variant="ghost" className="font-medium" data-testid="login-btn">
+                Entrar
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button className="bg-secondary hover:bg-secondary/90 text-white rounded-none px-6 font-semibold" data-testid="register-btn">
+                Área de Cliente
+              </Button>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="lg:hidden p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            data-testid="mobile-menu-btn"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden py-4 border-t border-border animate-fade-in">
+            <nav className="flex flex-col gap-4">
+              <a href="#servicos" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">Serviços</a>
+              <a href="#portfolio" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">Portfolio</a>
+              <a href="#testemunhos" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">Testemunhos</a>
+              <a href="#contacto" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">Contacto</a>
+              <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                <Link to="/login">
+                  <Button variant="outline" className="w-full">Entrar</Button>
+                </Link>
+                <Link to="/register">
+                  <Button className="w-full bg-secondary hover:bg-secondary/90">Área de Cliente</Button>
+                </Link>
+              </div>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+// Hero Section
+const HeroSection = () => {
+  return (
+    <section className="min-h-screen flex items-center pt-20 lg:pt-0">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          <div className="space-y-8">
+            <div className="space-y-4 opacity-0 animate-fade-up">
+              <p className="text-sm font-medium tracking-wider uppercase text-secondary">
+                Agência de Desenvolvimento
+              </p>
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-none text-primary">
+                Criamos o seu <span className="text-secondary">futuro digital</span>
+              </h1>
+            </div>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg opacity-0 animate-fade-up animation-delay-200">
+              Desenvolvemos websites e aplicações móveis que transformam ideias em experiências digitais extraordinárias. Android, iOS e Web.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-up animation-delay-300">
+              <a href="#contacto">
+                <Button 
+                  className="bg-primary text-white hover:bg-primary/90 rounded-none px-8 py-6 text-lg font-semibold shadow-lg shadow-primary/20 hover:translate-y-[-2px] transition-all"
+                  data-testid="hero-cta-btn"
+                >
+                  Começar Projeto
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </a>
+              <a href="#portfolio">
+                <Button 
+                  variant="outline" 
+                  className="border-primary/20 hover:border-primary hover:bg-primary/5 rounded-none px-8 py-6 text-lg font-medium"
+                  data-testid="hero-portfolio-btn"
+                >
+                  Ver Portfolio
+                </Button>
+              </a>
+            </div>
+            <div className="flex items-center gap-8 pt-4 opacity-0 animate-fade-up animation-delay-400">
+              <div>
+                <p className="text-3xl font-bold text-primary">50+</p>
+                <p className="text-sm text-muted-foreground">Projetos Entregues</p>
+              </div>
+              <div className="w-px h-12 bg-border"></div>
+              <div>
+                <p className="text-3xl font-bold text-primary">100%</p>
+                <p className="text-sm text-muted-foreground">Clientes Satisfeitos</p>
+              </div>
+              <div className="w-px h-12 bg-border"></div>
+              <div>
+                <p className="text-3xl font-bold text-primary">5+</p>
+                <p className="text-sm text-muted-foreground">Anos de Experiência</p>
+              </div>
+            </div>
+          </div>
+          <div className="relative opacity-0 animate-fade-up animation-delay-300">
+            <div className="aspect-square rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+              <img 
+                src="https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBkaWdpdGFsJTIwYWdlbmN5JTIwdGVhbSUyMGNvbGxhYm9yYXRpb24lMjBvZmZpY2V8ZW58MHx8fHwxNzcxNTE3NDAyfDA&ixlib=rb-4.1.0&q=85"
+                alt="Team collaboration"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg border border-border">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-secondary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-primary">Qualidade Garantida</p>
+                  <p className="text-sm text-muted-foreground">Entrega no prazo</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Services Section
+const ServicesSection = () => {
+  const services = [
+    {
+      icon: Monitor,
+      title: "Desenvolvimento Web",
+      description: "Websites modernos, responsivos e otimizados para SEO. Desde landing pages a plataformas complexas.",
+      features: ["React & Vue.js", "E-commerce", "Dashboards", "APIs RESTful"]
+    },
+    {
+      icon: Smartphone,
+      title: "Aplicações Android",
+      description: "Apps nativas e híbridas para Android com performance excepcional e design intuitivo.",
+      features: ["Kotlin & Java", "Material Design", "Play Store", "Firebase"]
+    },
+    {
+      icon: Code2,
+      title: "Aplicações iOS",
+      description: "Desenvolvimento de apps para iPhone e iPad com a qualidade que a Apple exige.",
+      features: ["Swift & SwiftUI", "Human Interface", "App Store", "Core Data"]
+    },
+    {
+      icon: Rocket,
+      title: "Soluções Completas",
+      description: "Do conceito ao lançamento, acompanhamos todo o processo de desenvolvimento do seu projeto.",
+      features: ["UX/UI Design", "Backend", "DevOps", "Manutenção"]
+    }
+  ];
+
+  return (
+    <section id="servicos" className="py-24 bg-muted/50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16">
+          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+            Os Nossos Serviços
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary">
+            O que fazemos de melhor
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((service, index) => (
+            <div 
+              key={index}
+              className="bg-white border border-border p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:shadow-md group"
+              data-testid={`service-card-${index}`}
+            >
+              <div className="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
+                <service.icon className="w-7 h-7 text-secondary" />
+              </div>
+              <h3 className="text-2xl font-medium text-primary mb-3">{service.title}</h3>
+              <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {service.features.map((feature, i) => (
+                  <span key={i} className="text-sm bg-muted px-3 py-1 rounded-full text-muted-foreground">
+                    {feature}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Portfolio Section
+const PortfolioSection = () => {
+  const projects = [
+    {
+      title: "E-Commerce Platform",
+      category: "Web",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
+      tech: ["React", "Node.js", "MongoDB"]
+    },
+    {
+      title: "App de Fitness",
+      category: "Mobile",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600",
+      tech: ["React Native", "Firebase"]
+    },
+    {
+      title: "Sistema de Gestão",
+      category: "Web",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
+      tech: ["Vue.js", "Python"]
+    },
+    {
+      title: "App de Delivery",
+      category: "Mobile",
+      image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600",
+      tech: ["Flutter", "Node.js"]
+    }
+  ];
+
+  return (
+    <section id="portfolio" className="py-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16">
+          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+            Portfolio
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary">
+            Projetos em Destaque
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {projects.map((project, index) => (
+            <div 
+              key={index}
+              className="group relative overflow-hidden rounded-2xl bg-white border border-border hover:border-secondary/50 transition-all duration-300"
+              data-testid={`portfolio-item-${index}`}
+            >
+              <div className="aspect-video overflow-hidden">
+                <img 
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <span className="text-sm text-secondary font-medium">{project.category}</span>
+                <h3 className="text-xl font-medium text-primary mt-2">{project.title}</h3>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tech.map((t, i) => (
+                    <span key={i} className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Testimonials Section
+const TestimonialsSection = () => {
+  const testimonials = [
+    {
+      name: "Maria Santos",
+      role: "CEO, TechStart",
+      image: "https://images.unsplash.com/photo-1758518727888-ffa196002e59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
+      text: "A Andre Dev transformou completamente a nossa presença digital. O website que desenvolveram superou todas as expectativas."
+    },
+    {
+      name: "João Ferreira",
+      role: "Fundador, AppSolutions",
+      image: "https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
+      text: "Profissionalismo e qualidade excecional. A app que criaram para nós tem recebido feedback incrível dos utilizadores."
+    }
+  ];
+
+  return (
+    <section id="testemunhos" className="py-24 bg-primary">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16">
+          <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+            Testemunhos
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">
+            O que dizem os nossos clientes
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10"
+              data-testid={`testimonial-${index}`}
+            >
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-secondary text-secondary" />
+                ))}
+              </div>
+              <p className="text-white/90 text-lg leading-relaxed mb-6">
+                "{testimonial.text}"
+              </p>
+              <div className="flex items-center gap-4">
+                <img 
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-semibold text-white">{testimonial.name}</p>
+                  <p className="text-white/60 text-sm">{testimonial.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Contact Section
+const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    service_type: ''
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await axios.post(`${API}/contact`, formData);
+      toast.success('Mensagem enviada com sucesso! Entraremos em contacto em breve.');
+      setFormData({ name: '', email: '', phone: '', message: '', service_type: '' });
+    } catch (error) {
+      toast.error('Erro ao enviar mensagem. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section id="contacto" className="py-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+          <div>
+            <p className="text-sm font-medium tracking-wider uppercase text-secondary mb-4">
+              Contacto
+            </p>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-primary mb-6">
+              Vamos criar algo incrível juntos
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              Tem um projeto em mente? Entre em contacto connosco e vamos discutir como podemos ajudar a transformar a sua ideia em realidade.
+            </p>
+
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-secondary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium text-primary">contacto@andredev.pt</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-secondary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Telefone</p>
+                  <p className="font-medium text-primary">+351 912 345 678</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-secondary" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Localização</p>
+                  <p className="font-medium text-primary">Lisboa, Portugal</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white border border-border p-8 rounded-2xl shadow-sm">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-primary mb-2">Nome</label>
+                <Input 
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="O seu nome"
+                  required
+                  data-testid="contact-name-input"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-primary mb-2">Email</label>
+                <Input 
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  placeholder="email@exemplo.com"
+                  required
+                  data-testid="contact-email-input"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-primary mb-2">Telefone (opcional)</label>
+                <Input 
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  placeholder="+351 000 000 000"
+                  data-testid="contact-phone-input"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-primary mb-2">Mensagem</label>
+                <Textarea 
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  placeholder="Descreva o seu projeto..."
+                  rows={4}
+                  required
+                  data-testid="contact-message-input"
+                />
+              </div>
+              <Button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-primary text-white hover:bg-primary/90 rounded-none py-6 font-semibold"
+                data-testid="contact-submit-btn"
+              >
+                {loading ? 'A enviar...' : 'Enviar Mensagem'}
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Footer
+const Footer = () => {
+  return (
+    <footer className="bg-primary py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+              <Code2 className="w-6 h-6 text-primary" />
+            </div>
+            <span className="font-sans font-bold text-xl text-white">Andre Dev</span>
+          </div>
+          <p className="text-white/60 text-sm">
+            © 2024 Andre Dev. Todos os direitos reservados.
+          </p>
+          <div className="flex gap-6">
+            <a href="#servicos" className="text-white/60 hover:text-white transition-colors text-sm">Serviços</a>
+            <a href="#portfolio" className="text-white/60 hover:text-white transition-colors text-sm">Portfolio</a>
+            <a href="#contacto" className="text-white/60 hover:text-white transition-colors text-sm">Contacto</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Main Landing Page
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen" data-testid="landing-page">
+      <Header />
+      <HeroSection />
+      <ServicesSection />
+      <PortfolioSection />
+      <TestimonialsSection />
+      <ContactSection />
+      <Footer />
+    </div>
+  );
+}
