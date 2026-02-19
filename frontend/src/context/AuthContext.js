@@ -68,6 +68,21 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
+  const setupAdmin = async (name, email, password) => {
+    const response = await axios.post(`${API}/admin/setup`, {
+      name,
+      email,
+      password
+    });
+    const { access_token, user: userData } = response.data;
+    
+    localStorage.setItem('token', access_token);
+    setToken(access_token);
+    setUser(userData);
+    
+    return userData;
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setToken(null);
@@ -78,14 +93,20 @@ export const AuthProvider = ({ children }) => {
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
+  const isAdmin = () => {
+    return user?.role === 'admin';
+  };
+
   const value = {
     user,
     token,
     loading,
     login,
     register,
+    setupAdmin,
     logout,
-    getAuthHeaders
+    getAuthHeaders,
+    isAdmin
   };
 
   return (
