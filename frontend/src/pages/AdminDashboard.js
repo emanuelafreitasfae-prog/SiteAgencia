@@ -457,6 +457,13 @@ const AdminUsers = () => {
 const AdminProjects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [budgetResponse, setBudgetResponse] = useState({
+    budget_status: 'accepted',
+    counter_proposal: '',
+    admin_notes: ''
+  });
+  const [responding, setResponding] = useState(false);
   const { getAuthHeaders } = useAuth();
 
   const fetchProjects = async () => {
@@ -489,6 +496,28 @@ const AdminProjects = () => {
     }
   };
 
+  const handleBudgetResponse = async () => {
+    if (budgetResponse.budget_status === 'counter_proposal' && !budgetResponse.counter_proposal.trim()) {
+      toast.error('Por favor, insira um valor para a contraproposta');
+      return;
+    }
+
+    setResponding(true);
+    try {
+      await axios.put(`${API}/admin/projects/${selectedProject.id}/budget-response`, budgetResponse, {
+        headers: getAuthHeaders()
+      });
+      toast.success('Resposta ao orçamento enviada');
+      setSelectedProject(null);
+      setBudgetResponse({ budget_status: 'accepted', counter_proposal: '', admin_notes: '' });
+      fetchProjects();
+    } catch (error) {
+      toast.error('Erro ao responder ao orçamento');
+    } finally {
+      setResponding(false);
+    }
+  };
+
   const getStatusBadge = (status) => {
     const badges = {
       pending: { label: 'Pendente', class: 'bg-yellow-100 text-yellow-700' },
@@ -496,6 +525,15 @@ const AdminProjects = () => {
       completed: { label: 'Concluído', class: 'bg-green-100 text-green-700' }
     };
     return badges[status] || badges.pending;
+  };
+
+  const getBudgetStatusBadge = (budgetStatus) => {
+    const badges = {
+      pending: { label: 'Orçamento Pendente', class: 'bg-orange-100 text-orange-700', icon: Clock },
+      accepted: { label: 'Orçamento Aceite', class: 'bg-green-100 text-green-700', icon: CheckCircle2 },
+      counter_proposal: { label: 'Contraproposta', class: 'bg-purple-100 text-purple-700', icon: Reply }
+    };
+    return badges[budgetStatus] || badges.pending;
   };
 
   if (loading) {
@@ -520,6 +558,8 @@ const AdminProjects = () => {
         <div className="space-y-3 sm:space-y-4">
           {projects.map((project) => {
             const statusBadge = getStatusBadge(project.status);
+            const budgetBadge = getBudgetStatusBadge(project.budget_status);
+            const BudgetIcon = budgetBadge.icon;
             return (
               <div 
                 key={project.id}
@@ -543,7 +583,56 @@ const AdminProjects = () => {
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center">
+
+                  {/* Budget Section */}
+                  <div className="bg-muted/50 rounded-lg p-3 sm:p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Euro className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium text-primary">Orçamento</span>
+                      <span className={`text-xs px-2 py-0.5 rounded-full flex items-center gap-1 ml-auto ${budgetBadge.class}`}>
+                        <BudgetIcon className="w-3 h-3" />
+                        {budgetBadge.label}
+                      </span>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm">
+                        <span className="text-muted-foreground">Proposto pelo cliente: </span>
+                        <span className="font-semibold text-primary">{project.budget}</span>
+                      </p>
+                      {project.budget_status === 'counter_proposal' && project.counter_proposal && (
+                        <p className="text-sm">
+                          <span className="text-muted-foreground">Sua contraproposta: </span>
+                          <span className="font-semibold text-purple-700">{project.counter_proposal}</span>
+                        </p>
+                      )}
+                      {project.admin_notes && (
+                        <p className="text-xs text-muted-foreground mt-2 italic">
+                          Nota: {project.admin_notes}
+                        </p>
+                      )}
+                    </div>
+                    
+                    {/* Budget Response Button */}
+                    {project.budget_status === 'pending' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-3 w-full sm:w-auto"
+                        onClick={() => {
+                          setSelectedProject(project);
+                          setBudgetResponse({ budget_status: 'accepted', counter_proposal: '', admin_notes: '' });
+                        }}
+                        data-testid={`respond-budget-${project.id}`}
+                      >
+                        <Euro className="w-4 h-4 mr-2" />
+                        Responder ao Orçamento
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Project Status Control */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-muted-foreground">Estado do Projeto:</span>
                     <Select
                       value={project.status}
                       onValueChange={(value) => handleStatusChange(project.id, value)}
@@ -564,6 +653,92 @@ const AdminProjects = () => {
           })}
         </div>
       )}
+
+      {/* Budget Response Dialog */}
+      <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+        <DialogContent aria-describedby="budget-response-description" className="max-w-[95vw] sm:max-w-lg mx-auto">
+          <DialogHeader>
+            <DialogTitle className="text-base sm:text-lg flex items-center gap-2">
+              <Euro className="w-5 h-5 text-secondary" />
+              Responder ao Orçamento
+            </DialogTitle>
+            <p id="budget-response-description" className="text-xs sm:text-sm text-muted-foreground">
+              Projeto: {selectedProject?.name}
+            </p>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div className="bg-muted p-3 rounded-lg">
+              <p className="text-sm">
+                <span className="text-muted-foreground">Orçamento proposto: </span>
+                <span className="font-semibold text-primary">{selectedProject?.budget}</span>
+              </p>
+              {selectedProject?.user && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Cliente: {selectedProject.user.name}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Sua Resposta</label>
+              <Select 
+                value={budgetResponse.budget_status}
+                onValueChange={(value) => setBudgetResponse({...budgetResponse, budget_status: value})}
+              >
+                <SelectTrigger data-testid="budget-response-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="accepted">
+                    <span className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-600" />
+                      Aceitar Orçamento
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="counter_proposal">
+                    <span className="flex items-center gap-2">
+                      <Reply className="w-4 h-4 text-purple-600" />
+                      Fazer Contraproposta
+                    </span>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {budgetResponse.budget_status === 'counter_proposal' && (
+              <div>
+                <label className="block text-sm font-medium mb-2">Valor da Contraproposta *</label>
+                <Input
+                  value={budgetResponse.counter_proposal}
+                  onChange={(e) => setBudgetResponse({...budgetResponse, counter_proposal: e.target.value})}
+                  placeholder="Ex: 6500€"
+                  data-testid="counter-proposal-input"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Notas (opcional)</label>
+              <Textarea
+                value={budgetResponse.admin_notes}
+                onChange={(e) => setBudgetResponse({...budgetResponse, admin_notes: e.target.value})}
+                placeholder="Adicionar uma nota ou justificação..."
+                rows={3}
+                data-testid="budget-notes-input"
+              />
+            </div>
+
+            <Button 
+              onClick={handleBudgetResponse}
+              disabled={responding}
+              className="w-full bg-secondary hover:bg-secondary/90"
+              data-testid="submit-budget-response-btn"
+            >
+              {responding ? 'A enviar...' : 'Enviar Resposta'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
