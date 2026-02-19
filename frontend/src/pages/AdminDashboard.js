@@ -678,47 +678,18 @@ const AdminMessages = () => {
           ))}
         </div>
       )}
-                    </p>
-                  )}
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  {new Date(message.created_at).toLocaleDateString('pt-PT')}
-                </span>
-              </div>
-              <p className="text-foreground mb-4">{message.content}</p>
-              
-              {message.admin_reply ? (
-                <div className="bg-muted p-4 rounded-lg">
-                  <p className="text-xs text-secondary font-medium mb-1">Sua resposta:</p>
-                  <p className="text-sm text-foreground">{message.admin_reply}</p>
-                </div>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedMessage(message)}
-                  data-testid={`reply-btn-${message.id}`}
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Responder
-                </Button>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Reply Dialog */}
       <Dialog open={!!selectedMessage} onOpenChange={() => setSelectedMessage(null)}>
-        <DialogContent aria-describedby="reply-description">
+        <DialogContent aria-describedby="reply-description" className="max-w-[95vw] sm:max-w-lg mx-auto">
           <DialogHeader>
-            <DialogTitle>Responder a: {selectedMessage?.subject}</DialogTitle>
-            <p id="reply-description" className="text-sm text-muted-foreground">
+            <DialogTitle className="text-base sm:text-lg">Responder a: {selectedMessage?.subject}</DialogTitle>
+            <p id="reply-description" className="text-xs sm:text-sm text-muted-foreground truncate">
               {selectedMessage?.user?.name} ({selectedMessage?.user?.email})
             </p>
           </DialogHeader>
-          <div className="space-y-4 mt-4">
-            <div className="bg-muted p-3 rounded-lg text-sm">
+          <div className="space-y-3 sm:space-y-4 mt-3 sm:mt-4">
+            <div className="bg-muted p-3 rounded-lg text-xs sm:text-sm">
               <p className="text-muted-foreground mb-1">Mensagem original:</p>
               <p>{selectedMessage?.content}</p>
             </div>
@@ -727,6 +698,7 @@ const AdminMessages = () => {
               onChange={(e) => setReplyText(e.target.value)}
               placeholder="Escreva a sua resposta..."
               rows={4}
+              className="min-h-[100px]"
               data-testid="reply-textarea"
             />
             <Button 
