@@ -732,23 +732,23 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-muted flex" data-testid="admin-panel">
       <AdminSidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       
-      <main className="flex-1 min-h-screen">
-        <header className="lg:hidden bg-white border-b border-border p-4 flex items-center justify-between">
+      <main className="flex-1 min-h-screen overflow-x-hidden">
+        <header className="lg:hidden bg-white border-b border-border p-3 sm:p-4 flex items-center justify-between">
           <button 
             onClick={() => setSidebarOpen(true)}
             className="p-2"
             data-testid="admin-mobile-sidebar-btn"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
           <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-secondary" />
-            <span className="font-sans font-bold text-lg text-primary">Admin</span>
+            <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
+            <span className="font-sans font-bold text-base sm:text-lg text-primary">Admin</span>
           </div>
-          <div className="w-10"></div>
+          <div className="w-9 sm:w-10"></div>
         </header>
 
-        <div className="p-6 lg:p-12">
+        <div className="p-4 sm:p-6 lg:p-12">
           <Routes>
             <Route index element={<AdminOverview />} />
             <Route path="contacts" element={<AdminContacts />} />
