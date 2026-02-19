@@ -106,7 +106,14 @@ const Header = () => {
 };
 
 // Hero Section
-const HeroSection = () => {
+const HeroSection = ({ content }) => {
+  const hero = content?.hero || {};
+  const stats = hero.stats || [
+    { value: "50+", label: "Projetos Entregues" },
+    { value: "100%", label: "Clientes Satisfeitos" },
+    { value: "5+", label: "Anos de Experiência" }
+  ];
+
   return (
     <section className="min-h-screen flex items-center pt-20 lg:pt-0">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
@@ -114,14 +121,14 @@ const HeroSection = () => {
           <div className="space-y-8">
             <div className="space-y-4 opacity-0 animate-fade-up">
               <p className="text-sm font-medium tracking-wider uppercase text-secondary">
-                Agência de Desenvolvimento
+                {hero.tagline || "Agência de Desenvolvimento"}
               </p>
               <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-none text-primary">
-                Criamos o seu <span className="text-secondary">futuro digital</span>
+                {hero.title || "Criamos o seu"} <span className="text-secondary">{hero.highlight || "futuro digital"}</span>
               </h1>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg opacity-0 animate-fade-up animation-delay-200">
-              Desenvolvemos websites e aplicações móveis que transformam ideias em experiências digitais extraordinárias. Android, iOS e Web.
+              {hero.description || "Desenvolvemos websites e aplicações móveis que transformam ideias em experiências digitais extraordinárias. Android, iOS e Web."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-up animation-delay-300">
               <a href="#contacto">
@@ -129,7 +136,7 @@ const HeroSection = () => {
                   className="bg-primary text-white hover:bg-primary/90 rounded-none px-8 py-6 text-lg font-semibold shadow-lg shadow-primary/20 hover:translate-y-[-2px] transition-all"
                   data-testid="hero-cta-btn"
                 >
-                  Começar Projeto
+                  {hero.cta_text || "Começar Projeto"}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </a>
@@ -144,20 +151,15 @@ const HeroSection = () => {
               </a>
             </div>
             <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-4 opacity-0 animate-fade-up animation-delay-400">
-              <div className="min-w-[80px]">
-                <p className="text-2xl sm:text-3xl font-bold text-primary">50+</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">Projetos Entregues</p>
-              </div>
-              <div className="hidden sm:block w-px h-12 bg-border"></div>
-              <div className="min-w-[80px]">
-                <p className="text-2xl sm:text-3xl font-bold text-primary">100%</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">Clientes Satisfeitos</p>
-              </div>
-              <div className="hidden sm:block w-px h-12 bg-border"></div>
-              <div className="min-w-[80px]">
-                <p className="text-2xl sm:text-3xl font-bold text-primary">5+</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">Anos de Experiência</p>
-              </div>
+              {stats.map((stat, index) => (
+                <div key={index} className="min-w-[80px]">
+                  <p className="text-2xl sm:text-3xl font-bold text-primary">{stat.value}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
+                  {index < stats.length - 1 && (
+                    <div className="hidden sm:block w-px h-12 bg-border absolute"></div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
           <div className="relative opacity-0 animate-fade-up animation-delay-300">
