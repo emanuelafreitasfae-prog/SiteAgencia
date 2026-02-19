@@ -475,6 +475,158 @@ async def root():
     return {"message": "Andre Dev API - Bem-vindo!"}
 
 
+# ==================== ADMIN ROUTES ====================
+
+@api_router.post("/admin/setup", response_model=TokenResponse)
+async def setup_admin(admin_data: AdminCreate):
+    """Create initial admin account (only works if no admin exists)"""
+    existing_admin = await db.users.find_one({"role": "admin"})
+    if existing_admin:
+        raise HTTPException(status_code=400, detail="Já existe um administrador")
+    
+    admin_id = str(uuid.uuid4())
+    admin_doc = {
+        "id": admin_id,
+        "name": admin_data.name,
+        "email": admin_data.email,
+        "password": hash_password(admin_data.password),
+        "company": None,
+        "role": "admin",
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.users.insert_one(admin_doc)
+    token = create_token(admin_id)
+    
+    user_response = UserResponse(
+        id=admin_id,
+        name=admin_data.name,
+        email=admin_data.email,
+        company=None,
+        role="admin",
+        created_at=admin_doc["created_at"]
+    )
+    
+    return TokenResponse(access_token=token, user=user_response)
+
+@api_router.get("/admin/check")
+async def check_admin_exists():
+    """Check if admin account exists"""
+    existing_admin = await db.users.find_one({"role": "admin"}, {"_id": 0, "password": 0})
+    return {"admin_exists": existing_admin is not None}
+
+@api_router.get("/admin/contacts")
+async def get_all_contacts(admin: dict = Depends(get_admin_user)):
+    """Get all contact form submissions"""
+    contacts = await db.contacts.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    return contacts
+
+@api_router.delete("/admin/contacts/{contact_id}")
+async def delete_contact(contact_id: str, admin: dict = Depends(get_admin_user)):
+    """Delete a contact submission"""
+    result = await db.contacts.delete_one({"id": contact_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Contacto não encontrado")
+    return {"message": "Contacto eliminado"}
+
+@api_router.get("/admin/users")
+async def get_all_users(admin: dict = Depends(get_admin_user)):
+    """Get all registered users"""
+    users = await db.users.find({"role": "client"}, {"_id": 0, "password": 0}).sort("created_at", -1).to_list(100)
+    return users
+
+@api_router.delete("/admin/users/{user_id}")
+async def delete_user(user_id: str, admin: dict = Depends(get_admin_user)):
+    """Delete a user and their projects/messages"""
+    user = await db.users.find_one({"id": user_id, "role": "client"})
+    if not user:
+        raise HTTPException(status_code=404, detail="Utilizador não encontrado")
+    
+    await db.users.delete_one({"id": user_id})
+    await db.projects.delete_many({"user_id": user_id})
+    await db.messages.delete_many({"user_id": user_id})
+    
+    return {"message": "Utilizador eliminado"}
+
+@api_router.get("/admin/projects")
+async def get_all_projects(admin: dict = Depends(get_admin_user)):
+    """Get all projects from all users"""
+    projects = await db.projects.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    # Add user info to each project
+    for project in projects:
+        user = await db.users.find_one({"id": project["user_id"]}, {"_id": 0, "password": 0})
+        project["user"] = {"name": user["name"], "email": user["email"]} if user else None
+    return projects
+
+@api_router.put("/admin/projects/{project_id}/status")
+async def update_project_status(
+    project_id: str,
+    status: str,
+    admin: dict = Depends(get_admin_user)
+):
+    """Update project status"""
+    if status not in ["pending", "in_progress", "completed"]:
+        raise HTTPException(status_code=400, detail="Estado inválido")
+    
+    result = await db.projects.update_one(
+        {"id": project_id},
+        {"$set": {"status": status, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Projeto não encontrado")
+    
+    return {"message": "Estado atualizado"}
+
+@api_router.get("/admin/messages")
+async def get_all_messages(admin: dict = Depends(get_admin_user)):
+    """Get all messages from all users"""
+    messages = await db.messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    # Add user info
+    for message in messages:
+        user = await db.users.find_one({"id": message["user_id"]}, {"_id": 0, "password": 0})
+        message["user"] = {"name": user["name"], "email": user["email"]} if user else None
+    return messages
+
+@api_router.put("/admin/messages/{message_id}/reply")
+async def reply_to_message(
+    message_id: str,
+    reply: str,
+    admin: dict = Depends(get_admin_user)
+):
+    """Reply to a user message"""
+    result = await db.messages.update_one(
+        {"id": message_id},
+        {"$set": {"admin_reply": reply, "is_read": True}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+    
+    return {"message": "Resposta enviada"}
+
+@api_router.get("/admin/stats")
+async def get_admin_stats(admin: dict = Depends(get_admin_user)):
+    """Get overall statistics"""
+    total_users = await db.users.count_documents({"role": "client"})
+    total_contacts = await db.contacts.count_documents({})
+    total_projects = await db.projects.count_documents({})
+    pending_projects = await db.projects.count_documents({"status": "pending"})
+    in_progress_projects = await db.projects.count_documents({"status": "in_progress"})
+    completed_projects = await db.projects.count_documents({"status": "completed"})
+    total_messages = await db.messages.count_documents({})
+    unread_messages = await db.messages.count_documents({"is_read": False})
+    
+    return {
+        "total_users": total_users,
+        "total_contacts": total_contacts,
+        "total_projects": total_projects,
+        "pending_projects": pending_projects,
+        "in_progress_projects": in_progress_projects,
+        "completed_projects": completed_projects,
+        "total_messages": total_messages,
+        "unread_messages": unread_messages
+    }
+
+
 # Include the router
 app.include_router(api_router)
 
