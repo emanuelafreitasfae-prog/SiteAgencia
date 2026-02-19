@@ -621,33 +621,63 @@ const AdminMessages = () => {
 
   return (
     <div data-testid="admin-messages-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Mensagens</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Mensagens</h1>
       
       {messages.length === 0 ? (
-        <div className="bg-white border border-border rounded-xl p-12 text-center">
-          <MessageSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-primary mb-2">Sem mensagens</h3>
-          <p className="text-muted-foreground">As mensagens dos clientes aparecerão aqui.</p>
+        <div className="bg-white border border-border rounded-xl p-6 sm:p-8 md:p-12 text-center">
+          <MessageSquare className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Sem mensagens</h3>
+          <p className="text-sm sm:text-base text-muted-foreground">As mensagens dos clientes aparecerão aqui.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {messages.map((message) => (
             <div 
               key={message.id}
-              className={`bg-white border p-6 rounded-xl shadow-sm ${!message.is_read ? 'border-secondary' : 'border-border'}`}
+              className={`bg-white border p-4 sm:p-6 rounded-xl shadow-sm ${!message.is_read ? 'border-secondary' : 'border-border'}`}
               data-testid={`admin-message-${message.id}`}
             >
-              <div className="flex justify-between items-start gap-4 mb-3">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <h3 className="font-semibold text-primary">{message.subject}</h3>
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4 mb-2 sm:mb-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <h3 className="font-semibold text-primary text-sm sm:text-base">{message.subject}</h3>
                     {!message.is_read && (
                       <span className="text-xs bg-secondary text-white px-2 py-0.5 rounded-full">Novo</span>
                     )}
                   </div>
                   {message.user && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      De: {message.user.name} ({message.user.email})
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
+                      De: {message.user.name} <span className="hidden sm:inline">({message.user.email})</span>
+                    </p>
+                  )}
+                </div>
+                <span className="text-xs text-muted-foreground whitespace-nowrap">
+                  {new Date(message.created_at).toLocaleDateString('pt-PT')}
+                </span>
+              </div>
+              <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">{message.content}</p>
+              
+              {message.admin_reply ? (
+                <div className="bg-muted p-3 sm:p-4 rounded-lg">
+                  <p className="text-xs text-secondary font-medium mb-1">Sua resposta:</p>
+                  <p className="text-xs sm:text-sm text-foreground">{message.admin_reply}</p>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedMessage(message)}
+                  data-testid={`reply-btn-${message.id}`}
+                  className="w-full sm:w-auto"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  Responder
+                </Button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
                     </p>
                   )}
                 </div>
