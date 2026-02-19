@@ -1,0 +1,159 @@
+{
+  "project_name": "Andre Dev - Agency Platform",
+  "design_philosophy": {
+    "identity": "The Anti-AI Designer (E1)",
+    "core_principles": [
+      "Fusion over Imitation: Mix swiss design with tech utility.",
+      "Emotion First: Trust and Clarity via deep blues and whitespace.",
+      "Content is King: Every pixel serves the narrative.",
+      "Negative Space: Luxurious spacing (p-12, p-24) to frame content."
+    ],
+    "anti_patterns": [
+      "Purple/Teal generic tech gradients.",
+      "Inter font for headings.",
+      "Symmetry overload (Use asymmetry for tension).",
+      "Low contrast text."
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Outfit, sans-serif",
+      "body": "Plus Jakarta Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight leading-none",
+      "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body": "text-base md:text-lg leading-relaxed text-slate-600",
+      "caption": "text-sm font-medium tracking-wider uppercase text-slate-500"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');"
+    ]
+  },
+  "colors": {
+    "theme": "light",
+    "palette": {
+      "primary": {
+        "hsl": "222 47% 11%",
+        "hex": "#0F172A",
+        "usage": "Headings, Primary Buttons (bg), Sidebar Background"
+      },
+      "secondary": {
+        "hsl": "221 83% 53%",
+        "hex": "#2563EB",
+        "usage": "CTAs, Highlights, Icons, Active States"
+      },
+      "background": {
+        "hsl": "0 0% 100%",
+        "hex": "#FFFFFF",
+        "usage": "Main Page Background, Cards"
+      },
+      "foreground": {
+        "hsl": "215 27% 16%",
+        "hex": "#1E293B",
+        "usage": "Body Text"
+      },
+      "muted": {
+        "hsl": "210 40% 96%",
+        "hex": "#F1F5F9",
+        "usage": "Section Backgrounds, Input Fills"
+      },
+      "border": {
+        "hsl": "214 32% 91%",
+        "hex": "#E2E8F0",
+        "usage": "Dividers, Card Borders"
+      },
+      "accent": {
+         "hsl": "210 40% 96%",
+         "hex": "#F1F5F9",
+         "usage": "Hover states"
+      }
+    }
+  },
+  "layout_strategies": {
+    "spacing": {
+      "container_padding": "p-6 md:p-12 lg:p-24",
+      "section_gap": "gap-12 md:gap-24",
+      "internal_card_padding": "p-6 md:p-8"
+    },
+    "grid_system": {
+      "bento_grid": "grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]",
+      "dashboard_grid": "grid grid-cols-1 lg:grid-cols-4 gap-6"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-white hover:bg-primary/90 rounded-none px-8 py-3 font-semibold transition-all hover:translate-y-[-2px] shadow-lg shadow-primary/20",
+      "secondary": "bg-white text-primary border border-primary/20 hover:border-primary hover:bg-primary/5 rounded-none px-8 py-3 font-medium transition-all",
+      "ghost": "text-primary hover:bg-primary/5 px-4 py-2 rounded-md font-medium"
+    },
+    "cards": {
+      "marketing": "bg-white border border-border p-8 rounded-2xl hover:border-secondary/50 transition-colors duration-300 shadow-sm hover:shadow-md",
+      "dashboard": "bg-white border border-border p-6 rounded-xl shadow-sm"
+    },
+    "inputs": {
+      "default": "flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+    }
+  },
+  "visual_enhancers": {
+    "gradients": "bg-gradient-to-br from-primary to-slate-900 (Dark Mode Sections)",
+    "shadows": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "glassmorphism": "bg-white/70 backdrop-blur-xl border-b border-white/20",
+    "border_radius": "rounded-2xl"
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "Hero/Team",
+        "url": "https://images.unsplash.com/photo-1748346918817-0b1b6b2f9bab?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBkaWdpdGFsJTIwYWdlbmN5JTIwdGVhbSUyMGNvbGxhYm9yYXRpb24lMjBvZmZpY2V8ZW58MHx8fHwxNzcxNTE3NDAyfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern agency team collaboration"
+      },
+      {
+        "category": "Service: Web Development",
+        "url": "https://images.unsplash.com/photo-1759661881353-5b9cc55e1cf4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBzZXR1cCUyMG1vbml0b3IlMjBjb2RlJTIwc2NyZWVufGVufDB8fHx8MTc3MTUxNzQwM3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Code on monitor screen"
+      },
+      {
+        "category": "Service: Mobile Apps",
+        "url": "https://images.unsplash.com/photo-1755372740351-8d7d0fcd582c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTZ8MHwxfHNlYXJjaHwzfHxoYW5kJTIwaG9sZGluZyUyMHNtYXJ0cGhvbmUlMjBtb2Rlcm4lMjBhcHAlMjBpbnRlcmZhY2V8ZW58MHx8fHwxNzcxNTE3NDA0fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Hand holding smartphone"
+      },
+      {
+        "category": "Testimonial 1",
+        "url": "https://images.unsplash.com/photo-1758518727888-ffa196002e59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional Business Woman"
+      },
+      {
+        "category": "Testimonial 2",
+        "url": "https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzE1MTc0MDZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional Business Man"
+      }
+    ],
+    "icons": {
+      "library": "lucide-react",
+      "instructions": "Use Lucide icons. Stroke width 1.5px for elegance. Size 24px default."
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. UPDATE index.css: Replace all root variables with the HSL values provided in the 'colors' section. Do NOT use the default Shadcn zinc colors.",
+    "2. INSTALL FONTS: Add the Google Fonts import to index.css immediately.",
+    "3. TAILWIND CONFIG: Extend the font family in tailwind.config.js to include 'Outfit' (sans) and 'Plus Jakarta Sans' (body).",
+    "4. MARKETING PAGE: Build a 'Bento Grid' layout for the Services section using the layout_strategies provided.",
+    "5. DASHBOARD: Create a 'SidebarLayout' component. Use the 'muted' color for the dashboard main background and 'white' for the content cards.",
+    "6. ANIMATIONS: Implement 'framer-motion' for simple entrance animations (fade-up) on the Landing Page text and images. Add hover states to all cards.",
+    "7. COMPONENTS: Use existing Shadcn components but override their styles via className to match the 'buttons' and 'inputs' specs defined here.",
+    "8. RESPONSIVENESS: Ensure all grids collapse to 1 column on mobile (grid-cols-1).",
+    "9. IMAGES: Use the provided URLs. Do NOT use placeholders.",
+    "10. TESTING: Add data-testid to all buttons, inputs, and links."
+  ],
+  "universal_guidelines": [
+    "No generic centered layouts.",
+    "No purple/teal gradients.",
+    "Use glassmorphism for sticky headers.",
+    "Always tint greys with a bit of blue (cool grey).",
+    "Use sonner for toasts.",
+    "Components must use named exports."
+  ]
+}
