@@ -367,50 +367,81 @@ const AdminUsers = () => {
 
   return (
     <div data-testid="admin-users-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Utilizadores</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Utilizadores</h1>
       
       {users.length === 0 ? (
-        <div className="bg-white border border-border rounded-xl p-12 text-center">
-          <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-primary mb-2">Sem utilizadores</h3>
-          <p className="text-muted-foreground">Os utilizadores registados aparecerão aqui.</p>
+        <div className="bg-white border border-border rounded-xl p-6 sm:p-8 md:p-12 text-center">
+          <Users className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Sem utilizadores</h3>
+          <p className="text-sm sm:text-base text-muted-foreground">Os utilizadores registados aparecerão aqui.</p>
         </div>
       ) : (
-        <div className="bg-white border border-border rounded-xl overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-muted">
-              <tr>
-                <th className="text-left p-4 font-medium text-primary">Nome</th>
-                <th className="text-left p-4 font-medium text-primary">Email</th>
-                <th className="text-left p-4 font-medium text-primary">Empresa</th>
-                <th className="text-left p-4 font-medium text-primary">Data</th>
-                <th className="text-right p-4 font-medium text-primary">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id} className="border-t border-border" data-testid={`user-row-${user.id}`}>
-                  <td className="p-4">{user.name}</td>
-                  <td className="p-4 text-muted-foreground">{user.email}</td>
-                  <td className="p-4 text-muted-foreground">{user.company || '-'}</td>
-                  <td className="p-4 text-muted-foreground text-sm">
-                    {new Date(user.created_at).toLocaleDateString('pt-PT')}
-                  </td>
-                  <td className="p-4 text-right">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(user.id)}
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          {/* Mobile Cards */}
+          <div className="lg:hidden space-y-3">
+            {users.map((user) => (
+              <div key={user.id} className="bg-white border border-border p-4 rounded-xl" data-testid={`user-card-${user.id}`}>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-primary truncate">{user.name}</p>
+                    <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleDelete(user.id)}
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{user.company || 'Sem empresa'}</span>
+                  <span>{new Date(user.created_at).toLocaleDateString('pt-PT')}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Desktop Table */}
+          <div className="hidden lg:block bg-white border border-border rounded-xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="text-left p-4 font-medium text-primary">Nome</th>
+                    <th className="text-left p-4 font-medium text-primary">Email</th>
+                    <th className="text-left p-4 font-medium text-primary">Empresa</th>
+                    <th className="text-left p-4 font-medium text-primary">Data</th>
+                    <th className="text-right p-4 font-medium text-primary">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user.id} className="border-t border-border" data-testid={`user-row-${user.id}`}>
+                      <td className="p-4">{user.name}</td>
+                      <td className="p-4 text-muted-foreground">{user.email}</td>
+                      <td className="p-4 text-muted-foreground">{user.company || '-'}</td>
+                      <td className="p-4 text-muted-foreground text-sm">
+                        {new Date(user.created_at).toLocaleDateString('pt-PT')}
+                      </td>
+                      <td className="p-4 text-right">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(user.id)}
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
