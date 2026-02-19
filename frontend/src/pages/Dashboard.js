@@ -554,29 +554,29 @@ const SettingsPage = () => {
 
   return (
     <div data-testid="settings-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Definições</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Definições</h1>
 
-      <div className="bg-white border border-border p-6 rounded-xl shadow-sm max-w-lg">
-        <h2 className="text-lg font-semibold text-primary mb-6">Informações da Conta</h2>
+      <div className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm max-w-lg">
+        <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Informações da Conta</h2>
         
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Nome</label>
-            <p className="text-foreground">{user?.name}</p>
+            <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">Nome</label>
+            <p className="text-sm sm:text-base text-foreground">{user?.name}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Email</label>
-            <p className="text-foreground">{user?.email}</p>
+            <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">Email</label>
+            <p className="text-sm sm:text-base text-foreground break-all">{user?.email}</p>
           </div>
           {user?.company && (
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-1">Empresa</label>
-              <p className="text-foreground">{user?.company}</p>
+              <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">Empresa</label>
+              <p className="text-sm sm:text-base text-foreground">{user?.company}</p>
             </div>
           )}
           <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Membro desde</label>
-            <p className="text-foreground">
+            <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">Membro desde</label>
+            <p className="text-sm sm:text-base text-foreground">
               {user?.created_at ? new Date(user.created_at).toLocaleDateString('pt-PT') : '-'}
             </p>
           </div>
@@ -594,27 +594,27 @@ export default function Dashboard() {
     <div className="min-h-screen bg-muted flex" data-testid="dashboard">
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       
-      <main className="flex-1 min-h-screen">
+      <main className="flex-1 min-h-screen overflow-x-hidden">
         {/* Mobile Header */}
-        <header className="lg:hidden bg-white border-b border-border p-4 flex items-center justify-between">
+        <header className="lg:hidden bg-white border-b border-border p-3 sm:p-4 flex items-center justify-between">
           <button 
             onClick={() => setSidebarOpen(true)}
             className="p-2"
             data-testid="mobile-sidebar-btn"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Code2 className="w-5 h-5 text-white" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Code2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <span className="font-sans font-bold text-lg text-primary">Andre Dev</span>
+            <span className="font-sans font-bold text-base sm:text-lg text-primary">Andre Dev</span>
           </div>
-          <div className="w-10"></div>
+          <div className="w-9 sm:w-10"></div>
         </header>
 
         {/* Content */}
-        <div className="p-6 lg:p-12">
+        <div className="p-4 sm:p-6 lg:p-12">
           <Routes>
             <Route index element={<DashboardOverview />} />
             <Route path="projects" element={<ProjectsPage />} />
