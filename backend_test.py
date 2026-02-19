@@ -326,6 +326,286 @@ class AndreDev_APITester:
 
         return success
 
+    # ============= ADMIN FUNCTIONALITY TESTS =============
+
+    def test_check_admin_exists(self):
+        """Test checking if admin account exists (public endpoint)"""
+        success, response = self.run_test(
+            "Check Admin Exists",
+            "GET",
+            "admin/check",
+            200
+        )
+
+        if success:
+            admin_exists = response.get('admin_exists', False)
+            print(f"   Admin exists: {admin_exists}")
+
+        return success
+
+    def test_admin_setup(self):
+        """Test admin account setup"""
+        # First check if admin exists
+        check_success, check_response = self.run_test(
+            "Pre-Admin Setup Check",
+            "GET",
+            "admin/check",
+            200
+        )
+
+        if not check_success:
+            return False
+
+        admin_exists = check_response.get('admin_exists', False)
+        
+        if admin_exists:
+            print("   Admin already exists, skipping setup test")
+            return True
+
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        admin_data = {
+            "name": f"Admin Test {timestamp}",
+            "email": f"admin_{timestamp}@example.com",
+            "password": "AdminPass123!"
+        }
+
+        success, response = self.run_test(
+            "Admin Setup",
+            "POST",
+            "admin/setup",
+            200,
+            data=admin_data
+        )
+
+        if success and 'access_token' in response and 'user' in response:
+            self.admin_token = response['access_token']
+            self.admin_user_id = response['user']['id']
+            print(f"   Admin created: {response['user']['name']} ({response['user']['email']})")
+            print(f"   Admin role: {response['user']['role']}")
+        
+        return success
+
+    def test_admin_login(self):
+        """Test admin login functionality"""
+        # If admin was just created in setup, test is not needed
+        if hasattr(self, 'admin_token') and self.admin_token:
+            print("✅ Admin Login - Already authenticated via setup")
+            return True
+
+        # Try to login with known admin credentials (would need to exist)
+        print("❌ Admin Login - No admin credentials available for login test")
+        return False
+
+    def test_admin_stats(self):
+        """Test admin statistics endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Stats Test - No admin auth token available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Stats",
+            "GET",
+            "admin/stats",
+            200
+        )
+
+        if success:
+            stats = response
+            print(f"   Admin Stats - Users: {stats.get('total_users', 0)}, " +
+                  f"Contacts: {stats.get('total_contacts', 0)}, " +
+                  f"Projects: {stats.get('total_projects', 0)}, " +
+                  f"Messages: {stats.get('total_messages', 0)}")
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_get_contacts(self):
+        """Test admin get all contacts endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Get Contacts Test - No admin auth token available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Get Contacts",
+            "GET",
+            "admin/contacts",
+            200
+        )
+
+        if success:
+            contact_count = len(response) if isinstance(response, list) else 0
+            print(f"   Found {contact_count} contacts")
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_get_users(self):
+        """Test admin get all users endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Get Users Test - No admin auth token available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Get Users",
+            "GET",
+            "admin/users",
+            200
+        )
+
+        if success:
+            user_count = len(response) if isinstance(response, list) else 0
+            print(f"   Found {user_count} users")
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_get_projects(self):
+        """Test admin get all projects endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Get Projects Test - No admin auth token available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Get Projects",
+            "GET",
+            "admin/projects",
+            200
+        )
+
+        if success:
+            project_count = len(response) if isinstance(response, list) else 0
+            print(f"   Found {project_count} projects")
+            # Store a project ID for status update test
+            if project_count > 0 and isinstance(response, list):
+                self.test_project_id = response[0].get('id')
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_update_project_status(self):
+        """Test admin update project status endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Update Project Status Test - No admin auth token available")
+            return False
+
+        if not hasattr(self, 'test_project_id') or not self.test_project_id:
+            print("❌ Admin Update Project Status Test - No project ID available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Update Project Status",
+            "PUT",
+            f"admin/projects/{self.test_project_id}/status?status=in_progress",
+            200
+        )
+
+        if success:
+            print(f"   Updated project {self.test_project_id} status to in_progress")
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_get_messages(self):
+        """Test admin get all messages endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Get Messages Test - No admin auth token available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        success, response = self.run_test(
+            "Admin Get Messages",
+            "GET",
+            "admin/messages",
+            200
+        )
+
+        if success:
+            message_count = len(response) if isinstance(response, list) else 0
+            print(f"   Found {message_count} messages")
+            # Store a message ID for reply test
+            if message_count > 0 and isinstance(response, list):
+                self.test_message_id = response[0].get('id')
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_reply_message(self):
+        """Test admin reply to message endpoint"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            print("❌ Admin Reply Message Test - No admin auth token available")
+            return False
+
+        if not hasattr(self, 'test_message_id') or not self.test_message_id:
+            print("❌ Admin Reply Message Test - No message ID available")
+            return False
+
+        # Store original token and use admin token
+        original_token = self.token
+        self.token = self.admin_token
+
+        reply_text = "This is an admin test reply."
+        
+        success, response = self.run_test(
+            "Admin Reply to Message",
+            "PUT",
+            f"admin/messages/{self.test_message_id}/reply?reply={reply_text}",
+            200
+        )
+
+        if success:
+            print(f"   Replied to message {self.test_message_id}")
+
+        # Restore original token
+        self.token = original_token
+        return success
+
+    def test_admin_access_forbidden_for_regular_user(self):
+        """Test that regular users cannot access admin endpoints"""
+        if not self.token:
+            print("❌ Admin Access Test - No regular user auth token available")
+            return False
+
+        success, response = self.run_test(
+            "Admin Access Forbidden for Regular User",
+            "GET",
+            "admin/stats",
+            403  # Should return 403 Forbidden
+        )
+
+        if success:
+            print("   Regular user correctly denied access to admin endpoint")
+
+        return success
+
     def run_all_tests(self):
         """Run all API tests in order"""
         print(f"🚀 Starting Andre Dev API Testing")
