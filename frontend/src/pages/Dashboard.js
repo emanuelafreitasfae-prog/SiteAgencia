@@ -393,6 +393,7 @@ const ProjectsPage = () => {
         <div className="grid gap-3 sm:gap-4">
           {projects.map((project) => {
             const statusBadge = getStatusBadge(project.status);
+            const budgetBadge = getBudgetStatusBadge(project.budget_status);
             return (
               <div 
                 key={project.id}
@@ -408,15 +409,38 @@ const ProjectsPage = () => {
                       </span>
                     </div>
                     <p className="text-muted-foreground text-xs sm:text-sm mb-2 sm:mb-3">{project.description}</p>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3">
                       <span className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
                         {getTypeBadge(project.project_type)}
                       </span>
-                      {project.budget && (
-                        <span className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
-                          {project.budget}
+                    </div>
+                    
+                    {/* Budget Section */}
+                    <div className="bg-muted/50 rounded-lg p-3 sm:p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Euro className="w-4 h-4 text-secondary" />
+                        <span className="text-sm font-medium text-primary">Orçamento</span>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ml-auto ${budgetBadge.class}`}>
+                          {budgetBadge.label}
                         </span>
-                      )}
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm">
+                          <span className="text-muted-foreground">Proposto: </span>
+                          <span className="font-medium text-primary">{project.budget}</span>
+                        </p>
+                        {project.budget_status === 'counter_proposal' && project.counter_proposal && (
+                          <p className="text-sm">
+                            <span className="text-muted-foreground">Contraproposta: </span>
+                            <span className="font-medium text-purple-700">{project.counter_proposal}</span>
+                          </p>
+                        )}
+                        {project.admin_notes && (
+                          <p className="text-xs text-muted-foreground mt-2 italic">
+                            Nota: {project.admin_notes}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm text-muted-foreground">
