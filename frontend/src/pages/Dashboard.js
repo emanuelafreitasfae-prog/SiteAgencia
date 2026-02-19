@@ -306,9 +306,12 @@ const ProjectsPage = () => {
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent aria-describedby="new-project-description">
             <DialogHeader>
               <DialogTitle>Criar Novo Projeto</DialogTitle>
+              <p id="new-project-description" className="text-sm text-muted-foreground">
+                Preencha os dados do seu novo projeto
+              </p>
             </DialogHeader>
             <form onSubmit={handleCreateProject} className="space-y-4 mt-4">
               <div>
