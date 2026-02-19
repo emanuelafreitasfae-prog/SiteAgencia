@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,11 +17,23 @@ import {
   Star,
   Mail,
   Phone,
-  MapPin
+  MapPin,
+  Database,
+  Cloud
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Icon mapping
+const iconMap = {
+  Monitor: Monitor,
+  Smartphone: Smartphone,
+  Code2: Code2,
+  Rocket: Rocket,
+  Database: Database,
+  Cloud: Cloud
+};
 
 // Header Component
 const Header = () => {
