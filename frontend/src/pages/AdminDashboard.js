@@ -271,41 +271,41 @@ const AdminContacts = () => {
 
   return (
     <div data-testid="admin-contacts-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Contactos</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Contactos</h1>
       
       {contacts.length === 0 ? (
-        <div className="bg-white border border-border rounded-xl p-12 text-center">
-          <Mail className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-primary mb-2">Sem contactos</h3>
-          <p className="text-muted-foreground">Os contactos do formulário aparecerão aqui.</p>
+        <div className="bg-white border border-border rounded-xl p-6 sm:p-8 md:p-12 text-center">
+          <Mail className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Sem contactos</h3>
+          <p className="text-sm sm:text-base text-muted-foreground">Os contactos do formulário aparecerão aqui.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {contacts.map((contact) => (
             <div 
               key={contact.id}
-              className="bg-white border border-border p-6 rounded-xl shadow-sm"
+              className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm"
               data-testid={`contact-${contact.id}`}
             >
-              <div className="flex justify-between items-start gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-primary">{contact.name}</h3>
+              <div className="flex justify-between items-start gap-2 sm:gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-primary truncate">{contact.name}</h3>
                     <span className="text-xs text-muted-foreground">
                       {new Date(contact.created_at).toLocaleDateString('pt-PT')}
                     </span>
                   </div>
-                  <p className="text-sm text-secondary mb-1">{contact.email}</p>
+                  <p className="text-xs sm:text-sm text-secondary mb-1 truncate">{contact.email}</p>
                   {contact.phone && (
-                    <p className="text-sm text-muted-foreground mb-2">{contact.phone}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-2">{contact.phone}</p>
                   )}
-                  <p className="text-foreground mt-3">{contact.message}</p>
+                  <p className="text-sm sm:text-base text-foreground mt-2 sm:mt-3">{contact.message}</p>
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDelete(contact.id)}
-                  className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
                   data-testid={`delete-contact-${contact.id}`}
                 >
                   <Trash2 className="w-4 h-4" />
