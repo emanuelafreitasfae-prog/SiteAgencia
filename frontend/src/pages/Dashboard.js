@@ -297,16 +297,16 @@ const ProjectsPage = () => {
 
   return (
     <div data-testid="projects-page">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary">Projetos</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">Projetos</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-secondary hover:bg-secondary/90" data-testid="new-project-btn">
+            <Button className="bg-secondary hover:bg-secondary/90 w-full sm:w-auto" data-testid="new-project-btn">
               <Plus className="w-4 h-4 mr-2" />
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent aria-describedby="new-project-description">
+          <DialogContent aria-describedby="new-project-description" className="max-w-[95vw] sm:max-w-lg mx-auto">
             <DialogHeader>
               <DialogTitle>Criar Novo Projeto</DialogTitle>
               <p id="new-project-description" className="text-sm text-muted-foreground">
