@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class AndreDev_APITester:
-    def __init__(self, base_url="https://code-studio-22.preview.emergentagent.com"):
+    def __init__(self, base_url="https://dev-staging-site.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_base = f"{base_url}/api"
         self.token = None
