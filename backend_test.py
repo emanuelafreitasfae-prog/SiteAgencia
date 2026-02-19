@@ -608,7 +608,7 @@ class AndreDev_APITester:
 
     def run_all_tests(self):
         """Run all API tests in order"""
-        print(f"🚀 Starting Andre Dev API Testing")
+        print(f"🚀 Starting Andre Dev API Testing with Admin Functionality")
         print(f"Base URL: {self.base_url}")
         print("=" * 60)
 
@@ -628,6 +628,23 @@ class AndreDev_APITester:
         self.test_create_message()
         self.test_get_messages()
         self.test_get_stats()
+
+        print("\n" + "=" * 40 + " ADMIN TESTS " + "=" * 40)
+        
+        # Admin functionality tests
+        self.test_check_admin_exists()
+        self.test_admin_setup()
+        self.test_admin_login()
+        self.test_admin_stats()
+        self.test_admin_get_contacts()
+        self.test_admin_get_users() 
+        self.test_admin_get_projects()
+        self.test_admin_update_project_status()
+        self.test_admin_get_messages()
+        self.test_admin_reply_message()
+        
+        # Test access control
+        self.test_admin_access_forbidden_for_regular_user()
 
         # Print summary
         print("\n" + "=" * 60)
