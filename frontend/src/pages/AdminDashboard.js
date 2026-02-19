@@ -35,7 +35,10 @@ import {
   AlertCircle,
   Trash2,
   Send,
-  FileEdit
+  FileEdit,
+  Euro,
+  Check,
+  Reply
 } from 'lucide-react';
 import ContentEditor from './ContentEditor';
 
