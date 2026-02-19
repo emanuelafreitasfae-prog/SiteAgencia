@@ -51,6 +51,11 @@ class UserRegister(BaseModel):
     password: str
     company: Optional[str] = None
 
+class AdminCreate(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
@@ -61,6 +66,7 @@ class UserResponse(BaseModel):
     name: str
     email: str
     company: Optional[str] = None
+    role: str = "client"  # client, admin
     created_at: str
 
 class TokenResponse(BaseModel):
