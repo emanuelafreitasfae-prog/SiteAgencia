@@ -104,7 +104,7 @@ const HeroSection = () => {
               <p className="text-sm font-medium tracking-wider uppercase text-secondary">
                 Agência de Desenvolvimento
               </p>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-none text-primary">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-none text-primary">
                 Criamos o seu <span className="text-secondary">futuro digital</span>
               </h1>
             </div>
@@ -131,20 +131,20 @@ const HeroSection = () => {
                 </Button>
               </a>
             </div>
-            <div className="flex items-center gap-8 pt-4 opacity-0 animate-fade-up animation-delay-400">
-              <div>
-                <p className="text-3xl font-bold text-primary">50+</p>
-                <p className="text-sm text-muted-foreground">Projetos Entregues</p>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-4 opacity-0 animate-fade-up animation-delay-400">
+              <div className="min-w-[80px]">
+                <p className="text-2xl sm:text-3xl font-bold text-primary">50+</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Projetos Entregues</p>
               </div>
-              <div className="w-px h-12 bg-border"></div>
-              <div>
-                <p className="text-3xl font-bold text-primary">100%</p>
-                <p className="text-sm text-muted-foreground">Clientes Satisfeitos</p>
+              <div className="hidden sm:block w-px h-12 bg-border"></div>
+              <div className="min-w-[80px]">
+                <p className="text-2xl sm:text-3xl font-bold text-primary">100%</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Clientes Satisfeitos</p>
               </div>
-              <div className="w-px h-12 bg-border"></div>
-              <div>
-                <p className="text-3xl font-bold text-primary">5+</p>
-                <p className="text-sm text-muted-foreground">Anos de Experiência</p>
+              <div className="hidden sm:block w-px h-12 bg-border"></div>
+              <div className="min-w-[80px]">
+                <p className="text-2xl sm:text-3xl font-bold text-primary">5+</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Anos de Experiência</p>
               </div>
             </div>
           </div>
@@ -156,14 +156,14 @@ const HeroSection = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg border border-border">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-secondary" />
+            <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-border">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-secondary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-primary">Qualidade Garantida</p>
-                  <p className="text-sm text-muted-foreground">Entrega no prazo</p>
+                  <p className="font-semibold text-primary text-sm sm:text-base">Qualidade Garantida</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Entrega no prazo</p>
                 </div>
               </div>
             </div>
