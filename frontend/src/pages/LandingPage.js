@@ -225,8 +225,9 @@ const ServicesSection = ({ content }) => {
                     </span>
                   ))}
                 </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
