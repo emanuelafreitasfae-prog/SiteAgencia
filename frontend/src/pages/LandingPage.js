@@ -493,14 +493,39 @@ const Footer = () => {
 
 // Main Landing Page
 export default function LandingPage() {
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await axios.get(`${API}/content`);
+        setContent(response.data);
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchContent();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen" data-testid="landing-page">
       <Header />
-      <HeroSection />
-      <ServicesSection />
-      <PortfolioSection />
-      <TestimonialsSection />
-      <ContactSection />
+      <HeroSection content={content} />
+      <ServicesSection content={content} />
+      <PortfolioSection content={content} />
+      <TestimonialsSection content={content} />
+      <ContactSection content={content} />
       <Footer />
     </div>
   );
