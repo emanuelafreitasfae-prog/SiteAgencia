@@ -382,7 +382,7 @@ const ContactSection = ({ content }) => {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-primary text-sm sm:text-base truncate">contacto@andredev.pt</p>
+                  <p className="font-medium text-primary text-sm sm:text-base truncate">{contactInfo.email || "contacto@andredev.pt"}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 sm:gap-4">
@@ -391,7 +391,7 @@ const ContactSection = ({ content }) => {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs sm:text-sm text-muted-foreground">Telefone</p>
-                  <p className="font-medium text-primary text-sm sm:text-base">+351 912 345 678</p>
+                  <p className="font-medium text-primary text-sm sm:text-base">{contactInfo.phone || "+351 912 345 678"}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 sm:gap-4">
@@ -400,7 +400,7 @@ const ContactSection = ({ content }) => {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs sm:text-sm text-muted-foreground">Localização</p>
-                  <p className="font-medium text-primary text-sm sm:text-base">Lisboa, Portugal</p>
+                  <p className="font-medium text-primary text-sm sm:text-base">{contactInfo.location || "Lisboa, Portugal"}</p>
                 </div>
               </div>
             </div>
