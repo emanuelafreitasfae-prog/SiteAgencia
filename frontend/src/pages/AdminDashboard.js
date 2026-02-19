@@ -502,47 +502,47 @@ const AdminProjects = () => {
 
   return (
     <div data-testid="admin-projects-page">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-8">Projetos</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-4 sm:mb-6 md:mb-8">Projetos</h1>
       
       {projects.length === 0 ? (
-        <div className="bg-white border border-border rounded-xl p-12 text-center">
-          <FolderKanban className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-primary mb-2">Sem projetos</h3>
-          <p className="text-muted-foreground">Os projetos dos clientes aparecerão aqui.</p>
+        <div className="bg-white border border-border rounded-xl p-6 sm:p-8 md:p-12 text-center">
+          <FolderKanban className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Sem projetos</h3>
+          <p className="text-sm sm:text-base text-muted-foreground">Os projetos dos clientes aparecerão aqui.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {projects.map((project) => {
             const statusBadge = getStatusBadge(project.status);
             return (
               <div 
                 key={project.id}
-                className="bg-white border border-border p-6 rounded-xl shadow-sm"
+                className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm"
                 data-testid={`admin-project-${project.id}`}
               >
-                <div className="flex flex-col lg:flex-row justify-between gap-4">
+                <div className="flex flex-col gap-3 sm:gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-primary">{project.name}</h3>
-                      <span className={`text-xs px-2 py-1 rounded-full ${statusBadge.class}`}>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-primary">{project.name}</h3>
+                      <span className={`text-xs px-2 py-0.5 sm:py-1 rounded-full ${statusBadge.class}`}>
                         {statusBadge.label}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm mb-3">{project.description}</p>
+                    <p className="text-muted-foreground text-xs sm:text-sm mb-2 sm:mb-3">{project.description}</p>
                     {project.user && (
-                      <p className="text-sm">
+                      <p className="text-xs sm:text-sm">
                         <span className="text-muted-foreground">Cliente: </span>
                         <span className="text-secondary">{project.user.name}</span>
-                        <span className="text-muted-foreground"> ({project.user.email})</span>
+                        <span className="text-muted-foreground hidden sm:inline"> ({project.user.email})</span>
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center">
                     <Select
                       value={project.status}
                       onValueChange={(value) => handleStatusChange(project.id, value)}
                     >
-                      <SelectTrigger className="w-40" data-testid={`status-select-${project.id}`}>
+                      <SelectTrigger className="w-full sm:w-40" data-testid={`status-select-${project.id}`}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
