@@ -189,33 +189,8 @@ const HeroSection = ({ content }) => {
 };
 
 // Services Section
-const ServicesSection = () => {
-  const services = [
-    {
-      icon: Monitor,
-      title: "Desenvolvimento Web",
-      description: "Websites modernos, responsivos e otimizados para SEO. Desde landing pages a plataformas complexas.",
-      features: ["React & Vue.js", "E-commerce", "Dashboards", "APIs RESTful"]
-    },
-    {
-      icon: Smartphone,
-      title: "Aplicações Android",
-      description: "Apps nativas e híbridas para Android com performance excepcional e design intuitivo.",
-      features: ["Kotlin & Java", "Material Design", "Play Store", "Firebase"]
-    },
-    {
-      icon: Code2,
-      title: "Aplicações iOS",
-      description: "Desenvolvimento de apps para iPhone e iPad com a qualidade que a Apple exige.",
-      features: ["Swift & SwiftUI", "Human Interface", "App Store", "Core Data"]
-    },
-    {
-      icon: Rocket,
-      title: "Soluções Completas",
-      description: "Do conceito ao lançamento, acompanhamos todo o processo de desenvolvimento do seu projeto.",
-      features: ["UX/UI Design", "Backend", "DevOps", "Manutenção"]
-    }
-  ];
+const ServicesSection = ({ content }) => {
+  const services = content?.services || [];
 
   return (
     <section id="servicos" className="py-12 sm:py-16 md:py-24 bg-muted/50">
@@ -230,24 +205,26 @@ const ServicesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {services.map((service, index) => (
-            <div 
-              key={index}
-              className="bg-white border border-border p-5 sm:p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:shadow-md group"
-              data-testid={`service-card-${index}`}
-            >
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-secondary/20 transition-colors">
-                <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-secondary" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-medium text-primary mb-2 sm:mb-3">{service.title}</h3>
-              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">{service.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {service.features.map((feature, i) => (
-                  <span key={i} className="text-xs sm:text-sm bg-muted px-2 sm:px-3 py-1 rounded-full text-muted-foreground">
-                    {feature}
-                  </span>
-                ))}
-              </div>
+          {services.map((service, index) => {
+            const IconComponent = iconMap[service.icon] || Monitor;
+            return (
+              <div 
+                key={index}
+                className="bg-white border border-border p-5 sm:p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:shadow-md group"
+                data-testid={`service-card-${index}`}
+              >
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-secondary/20 transition-colors">
+                  <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-secondary" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-medium text-primary mb-2 sm:mb-3">{service.title}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">{service.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {service.features?.map((feature, i) => (
+                    <span key={i} className="text-xs sm:text-sm bg-muted px-2 sm:px-3 py-1 rounded-full text-muted-foreground">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
             </div>
           ))}
         </div>
