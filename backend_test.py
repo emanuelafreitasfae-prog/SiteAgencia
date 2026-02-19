@@ -194,7 +194,7 @@ class AndreDev_APITester:
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         contact_data = {
             "name": f"Contact Test {timestamp}",
-            "email": f"contact_{timestamp}@test.com",
+            "email": f"contact_{timestamp}@example.com",
             "phone": "+351 123 456 789",
             "message": f"Test message sent at {timestamp}",
             "service_type": "web"
