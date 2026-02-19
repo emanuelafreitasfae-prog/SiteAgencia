@@ -370,31 +370,31 @@ const ProjectsPage = () => {
       </div>
 
       {projects.length === 0 ? (
-        <div className="bg-white border border-border rounded-xl p-12 text-center">
-          <FolderKanban className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-primary mb-2">Sem projetos</h3>
-          <p className="text-muted-foreground mb-4">Crie o seu primeiro projeto para começar.</p>
+        <div className="bg-white border border-border rounded-xl p-6 sm:p-8 md:p-12 text-center">
+          <FolderKanban className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-primary mb-2">Sem projetos</h3>
+          <p className="text-sm sm:text-base text-muted-foreground mb-4">Crie o seu primeiro projeto para começar.</p>
         </div>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid gap-3 sm:gap-4">
           {projects.map((project) => {
             const statusBadge = getStatusBadge(project.status);
             return (
               <div 
                 key={project.id}
-                className="bg-white border border-border p-6 rounded-xl shadow-sm hover:border-secondary/50 transition-colors"
+                className="bg-white border border-border p-4 sm:p-6 rounded-xl shadow-sm hover:border-secondary/50 transition-colors"
                 data-testid={`project-card-${project.id}`}
               >
-                <div className="flex flex-col sm:flex-row justify-between gap-4">
+                <div className="flex flex-col gap-3 sm:gap-4">
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-primary">{project.name}</h3>
-                      <span className={`text-xs px-2 py-1 rounded-full ${statusBadge.class}`}>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-primary">{project.name}</h3>
+                      <span className={`text-xs px-2 py-0.5 sm:py-1 rounded-full ${statusBadge.class}`}>
                         {statusBadge.label}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm mb-3">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
+                    <p className="text-muted-foreground text-xs sm:text-sm mb-2 sm:mb-3">{project.description}</p>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       <span className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
                         {getTypeBadge(project.project_type)}
                       </span>
@@ -405,7 +405,7 @@ const ProjectsPage = () => {
                       )}
                     </div>
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Criado em {new Date(project.created_at).toLocaleDateString('pt-PT')}
                   </div>
                 </div>
