@@ -513,22 +513,22 @@ const ContactSection = () => {
 // Footer
 const Footer = () => {
   return (
-    <footer className="bg-primary py-12">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="bg-primary py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-              <Code2 className="w-6 h-6 text-primary" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg flex items-center justify-center">
+              <Code2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             </div>
-            <span className="font-sans font-bold text-xl text-white">Andre Dev</span>
+            <span className="font-sans font-bold text-lg sm:text-xl text-white">Andre Dev</span>
           </div>
-          <p className="text-white/60 text-sm">
+          <p className="text-white/60 text-xs sm:text-sm text-center">
             © 2024 Andre Dev. Todos os direitos reservados.
           </p>
-          <div className="flex gap-6">
-            <a href="#servicos" className="text-white/60 hover:text-white transition-colors text-sm">Serviços</a>
-            <a href="#portfolio" className="text-white/60 hover:text-white transition-colors text-sm">Portfolio</a>
-            <a href="#contacto" className="text-white/60 hover:text-white transition-colors text-sm">Contacto</a>
+          <div className="flex gap-4 sm:gap-6">
+            <a href="#servicos" className="text-white/60 hover:text-white transition-colors text-xs sm:text-sm">Serviços</a>
+            <a href="#portfolio" className="text-white/60 hover:text-white transition-colors text-xs sm:text-sm">Portfolio</a>
+            <a href="#contacto" className="text-white/60 hover:text-white transition-colors text-xs sm:text-sm">Contacto</a>
           </div>
         </div>
       </div>
