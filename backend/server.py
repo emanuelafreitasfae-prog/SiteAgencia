@@ -671,6 +671,230 @@ async def get_admin_stats(admin: dict = Depends(get_admin_user)):
     }
 
 
+# ==================== CMS ROUTES ====================
+
+# Default content for the site
+DEFAULT_HERO = {
+    "tagline": "Agência de Desenvolvimento",
+    "title": "Criamos o seu",
+    "highlight": "futuro digital",
+    "description": "Desenvolvemos websites e aplicações móveis que transformam ideias em experiências digitais extraordinárias. Android, iOS e Web.",
+    "cta_text": "Começar Projeto",
+    "stats": [
+        {"value": "50+", "label": "Projetos Entregues"},
+        {"value": "100%", "label": "Clientes Satisfeitos"},
+        {"value": "5+", "label": "Anos de Experiência"}
+    ]
+}
+
+DEFAULT_SERVICES = [
+    {
+        "id": "1",
+        "icon": "Monitor",
+        "title": "Desenvolvimento Web",
+        "description": "Websites modernos, responsivos e otimizados para SEO. Desde landing pages a plataformas complexas.",
+        "features": ["React & Vue.js", "E-commerce", "Dashboards", "APIs RESTful"]
+    },
+    {
+        "id": "2",
+        "icon": "Smartphone",
+        "title": "Aplicações Android",
+        "description": "Apps nativas e híbridas para Android com performance excepcional e design intuitivo.",
+        "features": ["Kotlin & Java", "Material Design", "Play Store", "Firebase"]
+    },
+    {
+        "id": "3",
+        "icon": "Code2",
+        "title": "Aplicações iOS",
+        "description": "Desenvolvimento de apps para iPhone e iPad com a qualidade que a Apple exige.",
+        "features": ["Swift & SwiftUI", "Human Interface", "App Store", "Core Data"]
+    },
+    {
+        "id": "4",
+        "icon": "Rocket",
+        "title": "Soluções Completas",
+        "description": "Do conceito ao lançamento, acompanhamos todo o processo de desenvolvimento do seu projeto.",
+        "features": ["UX/UI Design", "Backend", "DevOps", "Manutenção"]
+    }
+]
+
+DEFAULT_PORTFOLIO = [
+    {
+        "id": "1",
+        "title": "E-Commerce Platform",
+        "description": "Plataforma completa de e-commerce com pagamentos integrados",
+        "image_url": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
+        "category": "Web",
+        "technologies": ["React", "Node.js", "MongoDB"],
+        "link": None
+    },
+    {
+        "id": "2",
+        "title": "App de Fitness",
+        "description": "Aplicação móvel para tracking de exercícios e nutrição",
+        "image_url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600",
+        "category": "Mobile",
+        "technologies": ["React Native", "Firebase"],
+        "link": None
+    },
+    {
+        "id": "3",
+        "title": "Sistema de Gestão",
+        "description": "Dashboard completo para gestão empresarial",
+        "image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
+        "category": "Web",
+        "technologies": ["Vue.js", "Python"],
+        "link": None
+    },
+    {
+        "id": "4",
+        "title": "App de Delivery",
+        "description": "Aplicação de entregas com tracking em tempo real",
+        "image_url": "https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600",
+        "category": "Mobile",
+        "technologies": ["Flutter", "Node.js"],
+        "link": None
+    }
+]
+
+DEFAULT_TESTIMONIALS = [
+    {
+        "id": "1",
+        "name": "Maria Santos",
+        "role": "CEO, TechStart",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+        "text": "A Andre Dev transformou completamente a nossa presença digital. O website que desenvolveram superou todas as expectativas."
+    },
+    {
+        "id": "2",
+        "name": "João Ferreira",
+        "role": "Fundador, AppSolutions",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+        "text": "Profissionalismo e qualidade excecional. A app que criaram para nós tem recebido feedback incrível dos utilizadores."
+    }
+]
+
+DEFAULT_CONTACT_INFO = {
+    "email": "contacto@andredev.pt",
+    "phone": "+351 912 345 678",
+    "location": "Lisboa, Portugal"
+}
+
+@api_router.get("/content")
+async def get_site_content():
+    """Get all site content (public)"""
+    content = await db.site_content.find_one({"type": "main"}, {"_id": 0})
+    
+    if not content:
+        return {
+            "hero": DEFAULT_HERO,
+            "services": DEFAULT_SERVICES,
+            "portfolio": DEFAULT_PORTFOLIO,
+            "testimonials": DEFAULT_TESTIMONIALS,
+            "contact_info": DEFAULT_CONTACT_INFO
+        }
+    
+    return {
+        "hero": content.get("hero", DEFAULT_HERO),
+        "services": content.get("services", DEFAULT_SERVICES),
+        "portfolio": content.get("portfolio", DEFAULT_PORTFOLIO),
+        "testimonials": content.get("testimonials", DEFAULT_TESTIMONIALS),
+        "contact_info": content.get("contact_info", DEFAULT_CONTACT_INFO)
+    }
+
+@api_router.get("/admin/content")
+async def get_admin_content(admin: dict = Depends(get_admin_user)):
+    """Get site content for editing"""
+    content = await db.site_content.find_one({"type": "main"}, {"_id": 0})
+    
+    if not content:
+        return {
+            "hero": DEFAULT_HERO,
+            "services": DEFAULT_SERVICES,
+            "portfolio": DEFAULT_PORTFOLIO,
+            "testimonials": DEFAULT_TESTIMONIALS,
+            "contact_info": DEFAULT_CONTACT_INFO
+        }
+    
+    return {
+        "hero": content.get("hero", DEFAULT_HERO),
+        "services": content.get("services", DEFAULT_SERVICES),
+        "portfolio": content.get("portfolio", DEFAULT_PORTFOLIO),
+        "testimonials": content.get("testimonials", DEFAULT_TESTIMONIALS),
+        "contact_info": content.get("contact_info", DEFAULT_CONTACT_INFO)
+    }
+
+@api_router.put("/admin/content/hero")
+async def update_hero(hero: HeroContent, admin: dict = Depends(get_admin_user)):
+    """Update hero section"""
+    await db.site_content.update_one(
+        {"type": "main"},
+        {"$set": {"hero": hero.model_dump(), "updated_at": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    return {"message": "Hero atualizado com sucesso"}
+
+@api_router.put("/admin/content/services")
+async def update_services(services: List[ServiceItem], admin: dict = Depends(get_admin_user)):
+    """Update services section"""
+    services_data = []
+    for i, service in enumerate(services):
+        s = service.model_dump()
+        if not s.get("id"):
+            s["id"] = str(i + 1)
+        services_data.append(s)
+    
+    await db.site_content.update_one(
+        {"type": "main"},
+        {"$set": {"services": services_data, "updated_at": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    return {"message": "Serviços atualizados com sucesso"}
+
+@api_router.put("/admin/content/portfolio")
+async def update_portfolio(portfolio: List[PortfolioItemCreate], admin: dict = Depends(get_admin_user)):
+    """Update portfolio section"""
+    portfolio_data = []
+    for i, item in enumerate(portfolio):
+        p = item.model_dump()
+        p["id"] = str(i + 1)
+        portfolio_data.append(p)
+    
+    await db.site_content.update_one(
+        {"type": "main"},
+        {"$set": {"portfolio": portfolio_data, "updated_at": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    return {"message": "Portfolio atualizado com sucesso"}
+
+@api_router.put("/admin/content/testimonials")
+async def update_testimonials(testimonials: List[TestimonialItem], admin: dict = Depends(get_admin_user)):
+    """Update testimonials section"""
+    testimonials_data = []
+    for i, item in enumerate(testimonials):
+        t = item.model_dump()
+        if not t.get("id"):
+            t["id"] = str(i + 1)
+        testimonials_data.append(t)
+    
+    await db.site_content.update_one(
+        {"type": "main"},
+        {"$set": {"testimonials": testimonials_data, "updated_at": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    return {"message": "Testemunhos atualizados com sucesso"}
+
+@api_router.put("/admin/content/contact-info")
+async def update_contact_info(contact_info: ContactInfo, admin: dict = Depends(get_admin_user)):
+    """Update contact info"""
+    await db.site_content.update_one(
+        {"type": "main"},
+        {"$set": {"contact_info": contact_info.model_dump(), "updated_at": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    return {"message": "Informação de contacto atualizada com sucesso"}
+
+
 # Include the router
 app.include_router(api_router)
 
