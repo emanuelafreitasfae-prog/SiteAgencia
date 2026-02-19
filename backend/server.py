@@ -343,6 +343,9 @@ async def create_project(
         "project_type": project_data.project_type,
         "status": project_data.status,
         "budget": project_data.budget,
+        "budget_status": "pending",
+        "counter_proposal": None,
+        "admin_notes": None,
         "created_at": now,
         "updated_at": now
     }
